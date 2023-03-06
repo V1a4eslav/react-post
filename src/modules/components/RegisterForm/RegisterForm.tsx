@@ -24,7 +24,6 @@ export interface IFormValues {
 export const RegisterForm = (props: IFormProps) => {
     const navigate = useNavigate()
     const [errorMessage, setErrorMessage] = useState('');
-    // const [redirect, setRedirect] = useState(false);
     const [signUp, {isError, error, isSuccess}] = useSignUpMutation();
 
     const {
@@ -59,14 +58,9 @@ export const RegisterForm = (props: IFormProps) => {
     useEffect(() => {
         if (isSuccess) {
             reset();
-            // setRedirect(true);
             navigate('/login');
         }
     }, [isSuccess])
-
-    // if(redirect){
-    //     return  <Navigate to='/login'/>
-    // }
 
     return (
         <Form onSubmit={handleSubmit(onSubmit)} {...props}>

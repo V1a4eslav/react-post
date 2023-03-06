@@ -10,10 +10,6 @@ const StyledWrapper = styled.div`
   display: flex;
   flex-direction: column;
   overflow: hidden;
-
-  main {
-    flex: 1 1 auto;
-  }
 `
 
 export const Wrapper = (props: IWrapper) => {
