@@ -1,9 +1,14 @@
 import styled from "styled-components";
-import {labelStyles, StyledLabel} from "../Label/StyleComponent";
+import {labelStyles, StyledLabel} from "../Label/StyledLabel";
+import {InputHTMLAttributes} from "react";
+
+interface IInputProps extends InputHTMLAttributes<HTMLInputElement> {
+    errors?: boolean,
+}
 
 interface IInputProps {
     type?: string,
-    placeholder?: string,
+    placeholder: string,
     classNameInput?: string,
     name: string,
 }
@@ -11,39 +16,44 @@ interface IInputProps {
 export const StyledInput = styled.input.attrs((props: IInputProps) => ({
     type: props.type || 'text',
     name: props.name,
-    placeholder: props.placeholder,
+    errors: props.errors
 }))`
   font-family: inherit;
   width: 100%;
-  font-size: ${({theme}) => theme.size.sizeLight};
+  font-size: ${({theme}) => theme.size.sizeSemiLight};
   color: ${({theme}) => theme.colors.secondary};
-  padding: 15px 10px;
+  padding: 16px 35px 16px 15px;
   background: transparent;
-  outline: 1px solid ${({theme}) => theme.colors.translucentSecondary};
+  outline: 2px solid ${({theme, errors}) => errors ? theme.colors.errorColor : theme.colors.translucentSecondary};
   border-radius: 5px;
 
+  &[type="password"] {
+    font-weight: 700;
+  }
+  
   &::placeholder {
     color: transparent;
   }
 
   &:placeholder-shown ~ ${StyledLabel} {
-    font-size: ${({theme}) => theme.size.sizeLight};
     cursor: text;
-    top: 31px;
+    top: 35px;
+    font-size: 16px;
   }
-
-
+  
   &:focus ~ ${StyledLabel} {
     ${labelStyles};
+
   }
 
   &:focus ~ ${StyledLabel} {
-    color: ${({theme}) => theme.colors.primary};
+    color: ${({theme, errors}) => errors ? theme.colors.errorColor : theme.colors.primary};
   }
 
   &:focus,
   &:hover {
     outline: 2px solid ${({theme}) => theme.colors.primary};
   }
+
 
 `

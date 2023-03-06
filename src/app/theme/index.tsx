@@ -7,6 +7,7 @@ export const themes= {
             secondaryText: '#373a3c',
             translucentPrimary: '#5CB85C80',
             translucentSecondary: '#373A3C4C',
+            errorColor: '#ef5350',
         },
         size: {
             sizeThink: '12.8px',

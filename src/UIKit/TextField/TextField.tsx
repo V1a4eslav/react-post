@@ -1,27 +1,36 @@
 import React from 'react';
-import {Label} from "./components/Label/Label";
 import {FormGroup} from "./components/FormGroup/FormGroup";
-import {Input} from "./components/Input/Input";
 import {ITextFieldProps} from './StyleComponent';
-import {StyledInput} from "./components/Input/StyleComponent";
+import {StyledInput} from "./components/Input/StyledInput";
+import {FieldError} from "react-hook-form";
+import {StyledErrorMessage} from "./components/StyledErrorMessage";
+import { StyledLabel } from './components/Label/StyledLabel';
 
 
 export const TextField = (props: ITextFieldProps) => {
-    const { register, errors, validationRules, ...rest } = props;
+    const {
+        register,
+        name,
+        placeholder,
+        validationRules,
+        classNameLabel,
+        errors,
+        ...rest
+    } = props;
 
     return (
         <FormGroup>
-            <StyledInput {...props}/>
-            {/*<Input*/}
-            {/*    {...register(props.name, validationRules)}*/}
-            {/*    {...rest}*/}
-            {/*/>*/}
-            <Label className={props.classNameLabel ? props.classNameLabel : ''}>
-                {props.placeholder}
-            </Label>
-            {/*{errors[props.name] && (*/}
-            {/*    <p>{errors[props.name].message}</p>*/}
-            {/*)}*/}
+            <StyledInput
+                placeholder={placeholder}
+                errors={!!errors[name]}
+                {...register(name, validationRules)}
+                {...rest}/>
+            <StyledLabel className={classNameLabel ? classNameLabel : ''}>
+                {placeholder}
+            </StyledLabel>
+            {errors[name] && (
+                <StyledErrorMessage>{(errors[name] as FieldError).message}</StyledErrorMessage>
+            )}
         </FormGroup>
     );
 };

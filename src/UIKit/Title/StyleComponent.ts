@@ -16,26 +16,28 @@ export const Typography = styled.p.attrs((props: IStyledTitle) => ({
   color: ${props => props.color || 'inherit'};
   font-weight: 500;
   text-align: ${props => props.align || 'left'};
+  line-height: 1.1;
+  margin-bottom: 8px;
   ${(props: IStyledTitle) => {
     switch (props.variant) {
       case 'h1':
         return css`
-          font-size: 20px;`;
+          font-size: 40px;`;
       case 'h2':
         return css`
-          font-size: 40px;`;
+          font-size: 35px;`;
       case 'h3':
         return css`
-          font-size: 60px;`;
+          font-size: 30px;`;
       case 'h4':
         return css`
-          font-size: 80px;`;
+          font-size: 25px;`;
       case 'h5':
         return css`
-          font-size: 100px;`;
+          font-size: 20px;`;
       case 'h6':
         return css`
-          font-size: 120px;`;
+          font-size: 16px;`;
       default:
         return css`
           font-size: inherit;

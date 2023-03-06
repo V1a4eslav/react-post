@@ -5,7 +5,7 @@
 
 // const saga = createSagaMiddleware();
 
-// export const store = configureStore({
+// export const not = configureStore({
 //     reducer: {
 //         user: userReducer,
 //     },

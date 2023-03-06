@@ -10,7 +10,7 @@ export const StyledComponent = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px 0px;
+  padding: 12px 0px;
 `
 
 export const HeaderBody = (props: IHeaderBody) => {

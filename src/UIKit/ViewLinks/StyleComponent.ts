@@ -17,4 +17,5 @@ export const StyledLink = styled(Link).attrs((props: StyledLink) => ({
   display: inline-block;
   text-align: center;
   font-size: ${props => props.size || (({theme}: any) => theme.size.sizeLight)};
+  margin-bottom: 16px;
 `;

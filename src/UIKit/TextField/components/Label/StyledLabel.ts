@@ -1,10 +1,4 @@
-import {ReactNode} from "react";
 import styled, {css} from "styled-components";
-
-export interface PropsLabel {
-    className?:string,
-    children?: ReactNode,
-}
 
 export const labelStyles = css`
   position: absolute;
@@ -23,6 +17,6 @@ export const StyledLabel = styled.label`
   pointer-events: none;
   background-color: #fff;
   padding: 0 5px;
-}`;
+`;
 
 

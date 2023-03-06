@@ -8,8 +8,8 @@ export interface IFormProps {
 }
 
 export const StyledForm = styled.form`
-  max-width: 330px;
-  padding: 0 10px 10px;
+  max-width: 540px;
+  //padding: 0 10px 10px;
   color: ${({color}) => color
           ? color
           : ({theme}) => theme.colors.text};

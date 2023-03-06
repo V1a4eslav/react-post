@@ -33,7 +33,7 @@ export const GlobalStyles = createGlobalStyle`
   body {
     color: #000;
     line-height: 1;
-    //font-family: $fontFamily;
+    font-family: 'Montserrat', sans-serif;;
     font-size: 14px;
     //text-rendering: optimizeLegibility;
     -ms-text-size-adjust: 100%;
