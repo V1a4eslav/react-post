@@ -13,5 +13,6 @@ export const Layout = () => {
             </MainWrapper>
             <footer>footer</footer>
         </Wrapper>
+
     );
 };

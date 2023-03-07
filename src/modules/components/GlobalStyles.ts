@@ -87,5 +87,4 @@ export const GlobalStyles = createGlobalStyle`
     font-weight: inherit;
     font-size: inherit;
   }
-
 `
