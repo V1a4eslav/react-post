@@ -1,14 +1,14 @@
 import React from "react";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {IFormProps} from "../../../UIKit/Form/StyleComponent";
-import {Form} from "../../../UIKit/Form/Form";
+import {MForm} from "../../../UIKit/Form/MForm";
 import {Title} from "../../../UIKit/Title/Title";
 import {ViewLink} from "../../../UIKit/ViewLinks/ViewLink";
 import {TextField} from "../../../UIKit/TextField/TextField";
 import {FormButton} from "../../../UIKit/Button/Button";
 import {PasswordTextField} from "../../../UIKit/PasswordTextField/PasswordTextField";
-import { useFetch} from "../../../hook/useFetch";
-import { StyledErrorMessage} from "../../../UIKit/TextField/components/StyledErrorMessage";
+import {useFetch} from "../../../hook/useFetch";
+import {StyledErrorMessage} from "../../../UIKit/TextField/components/StyledErrorMessage";
 
 
 interface IFormValues {
@@ -17,7 +17,7 @@ interface IFormValues {
 };
 
 export const LoginForm = (props: IFormProps) => {
-    const { isLoading, error, doFetch}= useFetch('/auth/login');
+    const {isLoading, error, doFetch} = useFetch('/auth/login');
 
     const {
         register,
@@ -27,13 +27,13 @@ export const LoginForm = (props: IFormProps) => {
 
     const onSubmit: SubmitHandler<IFormValues> = (data) => {
         doFetch({
-            method:'post',
+            method: 'post',
             data
         })
     }
 
     return (
-        <Form onSubmit={handleSubmit(onSubmit)} {...props}>
+        <MForm onSubmit={handleSubmit(onSubmit)} {...props}>
             <Title align='center' variant='h1'>Sign In</Title>
             <ViewLink to='/register'>Need an account?</ViewLink>
             <TextField
@@ -69,6 +69,7 @@ export const LoginForm = (props: IFormProps) => {
             />
             {error && <StyledErrorMessage>{error.message}</StyledErrorMessage>}
             <FormButton disabled={isLoading}>Submit</FormButton>
-        </Form>
+        </MForm>
+
     );
 };

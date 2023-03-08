@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import {FormEvent, ReactNode} from "react";
+import {motion} from "framer-motion";
 
 export interface IFormProps {
     children?: ReactNode;
@@ -7,9 +8,8 @@ export interface IFormProps {
     onSubmit?: (event: FormEvent<HTMLFormElement>) => void,
 }
 
-export const StyledForm = styled.form`
+export const StyledForm = styled(motion.form)`
   max-width: 540px;
-  //padding: 0 10px 10px;
   color: ${({color}) => color
           ? color
           : ({theme}) => theme.colors.text};

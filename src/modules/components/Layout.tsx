@@ -1,5 +1,6 @@
 import React from 'react';
 import {Outlet} from "react-router";
+import {AnimatePresence} from "framer-motion";
 import {Header} from "./Header/UI/Header";
 import {Wrapper} from "./Wrapper";
 import {MainWrapper} from "./MainWrapper";
@@ -9,7 +10,9 @@ export const Layout = () => {
         <Wrapper>
             <Header/>
             <MainWrapper>
-                <Outlet/>
+                <AnimatePresence mode="wait">
+                    <Outlet/>
+                </AnimatePresence>
             </MainWrapper>
             <footer>footer</footer>
         </Wrapper>

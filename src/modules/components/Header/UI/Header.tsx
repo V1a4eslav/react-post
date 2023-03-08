@@ -6,13 +6,13 @@ import {HeaderNav} from "./components/HeaderNav/HeaderNav";
 
 export const Header = () => {
     return (
-        <div className="header">
+        <header className="header">
             <Container>
                 <HeaderBody>
                     <Logo to='/'>conduit</Logo>
                     <HeaderNav/>
                 </HeaderBody>
             </Container>
-        </div>
+        </header>
     );
 };
