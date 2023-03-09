@@ -9,7 +9,7 @@ export interface IFetchResponse {
 }
 
 export const useFetch = (url: string): IFetchResponse => {
-    const baseUrl = 'http://adminshop.pp.ua';
+    const baseUrl = '';
     const [isLoading, setIsLoading] = useState(false);
     const [response, setResponse] = useState(null);
     const [error, setError] = useState<AxiosError | null>(null);

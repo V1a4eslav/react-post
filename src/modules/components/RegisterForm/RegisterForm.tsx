@@ -13,9 +13,10 @@ import {StyledErrorMessage} from "../../../UIKit/TextField/components/StyledErro
 import {useNavigate} from "react-router";
 import {ModalSuccess} from "../../../UIKit/Modals/Modal/ModalSuccess";
 import {Modal} from "../../../UIKit/Modals/Modal/Modal";
+import {checkErrorMessage} from "../../../helpers/checkErrorMessage";
 
 
-export interface IFormValues {
+interface IFormValues {
     name: string,
     email: string,
     password: string,
@@ -26,7 +27,7 @@ export interface IFormValues {
 export const RegisterForm = (props: IFormProps) => {
     const navigate = useNavigate()
     const [errorMessage, setErrorMessage] = useState('');
-    const [signUp, {isError, error, isSuccess}] = useSignUpMutation();
+    const [signUp, {isError, error, data, isSuccess, isLoading}] = useSignUpMutation();
     const [isOpenModal, setIsOpenModal] = useState(false);
 
     const {
@@ -42,13 +43,11 @@ export const RegisterForm = (props: IFormProps) => {
 
     const onSubmit: SubmitHandler<IFormValues> = useCallback(async (data) => {
         const {email, password} = data;
-
-        const response = await signUp({email, password});
-        localStorage.setItem('tokens', JSON.stringify(response));
+        await signUp({email, password});
 
     }, [signUp]);
 
-    const toSignInAction = ()=>{
+    const toSignInAction = () => {
         setIsOpenModal(false);
         navigate('/login');
     }
@@ -56,15 +55,13 @@ export const RegisterForm = (props: IFormProps) => {
     useEffect(() => {
         if (error) {
             setErrorMessage((error as IErrorResponse)?.data?.error?.message);
-            if (errorMessage === 'EMAIL_EXISTS') {
-                setValue('email', '');
-                setFocus('email');
-            }
+            checkErrorMessage(errorMessage,setValue,setFocus);
         }
-    }, [error, errorMessage]);
+    }, [error, errorMessage, setValue, setFocus]);
 
     useEffect(() => {
         if (isSuccess) {
+            localStorage.setItem('tokens', JSON.stringify(data));
             setIsOpenModal(true);
             reset();
         }
@@ -126,7 +123,7 @@ export const RegisterForm = (props: IFormProps) => {
                     }}
                 />
                 {isError && <StyledErrorMessage>{errorMessage}</StyledErrorMessage>}
-                <FormButton>Submit</FormButton>
+                <FormButton disabled={isLoading}>Submit</FormButton>
             </MForm>
             <Modal isOpen={isOpenModal} onCloseModal={toSignInAction}>
                 <ModalSuccess/>

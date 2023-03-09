@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {IFormProps} from "../../../UIKit/Form/StyleComponent";
 import {MForm} from "../../../UIKit/Form/MForm";
@@ -7,8 +7,10 @@ import {ViewLink} from "../../../UIKit/ViewLinks/ViewLink";
 import {TextField} from "../../../UIKit/TextField/TextField";
 import {FormButton} from "../../../UIKit/Button/Button";
 import {PasswordTextField} from "../../../UIKit/PasswordTextField/PasswordTextField";
-import {useFetch} from "../../../hook/useFetch";
 import {StyledErrorMessage} from "../../../UIKit/TextField/components/StyledErrorMessage";
+import {useSignInMutation} from "../../../app/repository/firebaseAuth/firebaseAuth";
+import {IErrorResponse} from "../../../app/repository/firebaseAuth/models/IErrorResponse";
+import {checkErrorMessage} from "../../../helpers/checkErrorMessage";
 
 
 interface IFormValues {
@@ -17,20 +19,28 @@ interface IFormValues {
 };
 
 export const LoginForm = (props: IFormProps) => {
-    const {isLoading, error, doFetch} = useFetch('/auth/login');
+    const [errorMessage, setErrorMessage] = useState('');
+    const [signIn, {isError, error, data, isSuccess, isLoading}] = useSignInMutation();
 
     const {
         register,
+        setValue,
+        setFocus,
         handleSubmit,
         formState: {errors}
     } = useForm<IFormValues>();
 
-    const onSubmit: SubmitHandler<IFormValues> = (data) => {
-        doFetch({
-            method: 'post',
-            data
-        })
-    }
+    const onSubmit: SubmitHandler<IFormValues> = useCallback(async (data) => {
+        await signIn(data)
+
+    }, [signIn]);
+
+    useEffect(() => {
+        if (error) {
+            setErrorMessage((error as IErrorResponse)?.data?.error?.message);
+            checkErrorMessage(errorMessage, setValue, setFocus);
+        }
+    }, [error, errorMessage, setValue, setFocus]);
 
     return (
         <MForm onSubmit={handleSubmit(onSubmit)} {...props}>
@@ -67,7 +77,7 @@ export const LoginForm = (props: IFormProps) => {
                     }
                 }}
             />
-            {error && <StyledErrorMessage>{error.message}</StyledErrorMessage>}
+            {isError && <StyledErrorMessage>{errorMessage}</StyledErrorMessage>}
             <FormButton disabled={isLoading}>Submit</FormButton>
         </MForm>
 

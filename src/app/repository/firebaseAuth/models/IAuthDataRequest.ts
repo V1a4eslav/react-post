@@ -1,4 +1,4 @@
-export interface ISignUpDataRequest{
+export interface IAuthDataRequest{
     email: string,
     password: string,
 }
