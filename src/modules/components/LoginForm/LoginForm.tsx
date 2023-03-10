@@ -26,6 +26,7 @@ export const LoginForm = (props: IFormProps) => {
         register,
         setValue,
         setFocus,
+        reset,
         handleSubmit,
         formState: {errors}
     } = useForm<IFormValues>();
@@ -35,6 +36,13 @@ export const LoginForm = (props: IFormProps) => {
 
     }, [signIn]);
 
+    useEffect(() => {
+        if (isSuccess) {
+            // localStorage.setItem('tokens', JSON.stringify(data));
+            reset();
+        }
+    }, [isSuccess])
+    
     useEffect(() => {
         if (error) {
             setErrorMessage((error as IErrorResponse)?.data?.error?.message);

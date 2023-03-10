@@ -61,7 +61,6 @@ export const RegisterForm = (props: IFormProps) => {
 
     useEffect(() => {
         if (isSuccess) {
-            localStorage.setItem('tokens', JSON.stringify(data));
             setIsOpenModal(true);
             reset();
         }
