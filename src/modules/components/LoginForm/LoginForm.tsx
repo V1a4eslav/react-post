@@ -11,6 +11,7 @@ import {StyledErrorMessage} from "../../../UIKit/TextField/components/StyledErro
 import {useSignInMutation} from "../../../app/repository/firebaseAuth/firebaseAuth";
 import {IErrorResponse} from "../../../app/repository/firebaseAuth/models/IErrorResponse";
 import {checkErrorMessage} from "../../../helpers/checkErrorMessage";
+import {useNavigate} from "react-router";
 
 
 interface IFormValues {
@@ -19,6 +20,7 @@ interface IFormValues {
 };
 
 export const LoginForm = (props: IFormProps) => {
+    const navigate = useNavigate();
     const [errorMessage, setErrorMessage] = useState('');
     const [signIn, {isError, error, data, isSuccess, isLoading}] = useSignInMutation();
 
@@ -33,16 +35,15 @@ export const LoginForm = (props: IFormProps) => {
 
     const onSubmit: SubmitHandler<IFormValues> = useCallback(async (data) => {
         await signIn(data)
-
     }, [signIn]);
 
     useEffect(() => {
         if (isSuccess) {
-            // localStorage.setItem('tokens', JSON.stringify(data));
             reset();
+            navigate('/')
         }
     }, [isSuccess])
-    
+
     useEffect(() => {
         if (error) {
             setErrorMessage((error as IErrorResponse)?.data?.error?.message);

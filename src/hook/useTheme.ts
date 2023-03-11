@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import  {useState} from 'react';
 import {themes} from "../app/theme";
 import {ICurrentTheme} from "../app/theme/themeInterface";
 

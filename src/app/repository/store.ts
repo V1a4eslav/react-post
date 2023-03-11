@@ -11,17 +11,19 @@ import {
     REGISTER,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import {userReducer} from "./user/userSlice";
 
 
 const persistConfig = {
-    key: "root",
-    version: 1,
+    key: 'root',
     storage,
-    blacklist:  [firebaseApi.reducerPath]
+    blacklist: ['Authentication'],
+    whitelist: ['user']
 }
 
 const rootReducer = combineReducers({
     [firebaseApi.reducerPath]: firebaseApi.reducer,
+    user: userReducer
 })
 
 
@@ -35,6 +37,8 @@ export const store = configureStore({
                 ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
             },
         }).concat(firebaseApi.middleware),
-    })
+})
 
 export const persistor = persistStore(store);
+
+export type RootState = ReturnType<typeof store.getState>

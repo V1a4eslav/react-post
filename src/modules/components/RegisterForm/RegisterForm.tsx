@@ -25,7 +25,7 @@ interface IFormValues {
 
 
 export const RegisterForm = (props: IFormProps) => {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const [errorMessage, setErrorMessage] = useState('');
     const [signUp, {isError, error, data, isSuccess, isLoading}] = useSignUpMutation();
     const [isOpenModal, setIsOpenModal] = useState(false);

@@ -3,6 +3,7 @@ import {firebaseConfig} from "../../../firebase";
 import {IAuthDataRequest} from "./models/IAuthDataRequest";
 import {ISignUpDataResponse} from "./models/ISignUpDataResponse";
 
+
 const BASE_URL = 'https://identitytoolkit.googleapis.com/v1';
 
 const headers = {
@@ -23,15 +24,15 @@ export const firebaseApi = createApi({
                 headers,
             }),
         }),
-        signIn:build.mutation<any,IAuthDataRequest>({
-            query:(data:IAuthDataRequest)=>({
-                url:`accounts:signInWithPassword?key=${firebaseConfig.apiKey}`,
-                method:'POST',
-                body:JSON.stringify({...data, returnSecureToken: true}),
+        signIn: build.mutation<any, IAuthDataRequest>({
+            query: (data: IAuthDataRequest) => ({
+                url: `accounts:signInWithPassword?key=${firebaseConfig.apiKey}`,
+                method: 'POST',
+                body: JSON.stringify({...data, returnSecureToken: true}),
                 headers,
-            })
-        })
+            }),
+        }),
     })
 })
 
-export const {useSignUpMutation,useSignInMutation} = firebaseApi;
+export const {useSignUpMutation, useSignInMutation} = firebaseApi;
