@@ -4,8 +4,9 @@ import {useOffset} from "../../../../../../hook/useOffset";
 import {FeedsTemplate} from "./FeedTemplate";
 
 export const GlobalFeed = () => {
-    const {offset, limit, pageNum} = useOffset();
-    const query =`?limit=${limit}&offset=${offset}`;
+    const {offset, limit,page, setPage} = useOffset();
+
+    const query = `?limit=${limit}&offset=${offset}`;
     const {
         data,
         isSuccess,
@@ -18,7 +19,8 @@ export const GlobalFeed = () => {
         <>
             <FeedsTemplate
                 limit={limit}
-                pageNum={pageNum}
+                setPage={setPage}
+                page={page}
                 offset={offset}
                 data={data}
                 isSuccess={isSuccess}

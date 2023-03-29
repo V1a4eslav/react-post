@@ -6,7 +6,7 @@ import {useGetTagFeedsQuery} from "../../../../../../app/repository/realWorld/Re
 
 export const TagFeed = () => {
     const [searchParams] = useSearchParams();
-    const {offset, limit, pageNum} = useOffset();
+    const {offset, limit,page, setPage} = useOffset();
     const tag = searchParams.get('tag');
     const query = `${tag}&limit=${limit}&offset=${offset}`;
     const {
@@ -20,8 +20,9 @@ export const TagFeed = () => {
         <>
             <FeedsTemplate
                 tag={tag}
+                setPage={setPage}
                 limit={limit}
-                pageNum={pageNum}
+                page={page}
                 offset={offset}
                 data={data}
                 isSuccess={isSuccess}

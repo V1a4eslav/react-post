@@ -5,11 +5,13 @@ import {StyledPagination} from "../../Paginate/StyledComponent";
 import {useLocation, useNavigate, useOutletContext} from "react-router";
 import {LoaderDots} from "../../../../../../UIKit/Loader/Loader";
 import {IFeedResponse} from "../../../../../../app/repository/realWorld/models/IFeedResponse";
+import {useSearchParams} from "react-router-dom";
 
 interface IFeedTemplate {
+    setPage: Dispatch<SetStateAction<number>>
     tag?: string | null,
     limit: number,
-    pageNum: number,
+    page: number,
     offset?: number,
     data: IFeedResponse | undefined,
     isSuccess: boolean,
@@ -20,13 +22,14 @@ interface IFeedTemplate {
 
 export const FeedsTemplate = ({
                                   data,
+                                  setPage,
                                   isSuccess,
                                   isError,
                                   isLoading,
                                   isFetching,
                                   tag,
                                   limit,
-                                  pageNum,
+                                  page,
                               }: IFeedTemplate) => {
     const navigate = useNavigate();
     const location = useLocation();
@@ -50,15 +53,14 @@ export const FeedsTemplate = ({
 
     const handlePageChange = useCallback((selectedItem: { selected: number }) => {
         const nextPage = selectedItem.selected + 1;
-        if (nextPage !== pageNum) {
-            scrollToTop();
-            if (!isLoadingScrollToTop && tag) {
-                navigate(`${location.pathname}?tag=${tag}&page=${nextPage}`);
-            } else {
-                navigate(`${location.pathname}?page=${nextPage}`);
-            }
+        setPage(nextPage);
+        if (!isLoadingScrollToTop && tag) {
+            navigate(`${location.pathname}?tag=${tag}&page=${nextPage}`);
+        } else {
+            navigate(`${location.pathname}?page=${nextPage}`);
         }
-    }, [tag, pageNum]);
+        scrollToTop();
+    }, [tag, page]);
 
     return (
         <>
@@ -80,7 +82,7 @@ export const FeedsTemplate = ({
                     onPageChange={handlePageChange}
                     containerClassName={"pagination"}
                     activeClassName={"active"}
-                    forcePage={pageNum - 1}
+                    forcePage={page - 1}
                 />) :
                 (isSuccess && !data?.articles.length && <p>No article...</p>)}
 

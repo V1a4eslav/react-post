@@ -1,17 +1,26 @@
-import {useSearchParams} from "react-router-dom";
+import {
+    Dispatch,
+    SetStateAction,
+    useEffect,
+    useState
+} from "react";
 
 interface IReturnUseOffset {
     offset: number,
     limit: number,
-    pageNum: number,
+    page: number,
+    setPage: Dispatch<SetStateAction<number>>
 }
 
-export const useOffset = ():IReturnUseOffset => {
+export const useOffset = (): IReturnUseOffset => {
     const limit = 10;
-    const [searchParams] = useSearchParams();
-    const page = searchParams.get('page');
-    const pageNum = parseInt(page || '1');
-    const offset = pageNum * limit - limit;
 
-    return {offset, limit,pageNum}
+    const [page, setPage] = useState(1);
+    const [offset, setOffset] = useState(0);
+
+    useEffect(() => {
+        setOffset(page * limit - limit);
+    }, [page]);
+
+    return {offset, limit, page, setPage}
 }

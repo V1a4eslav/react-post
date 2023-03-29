@@ -5,7 +5,7 @@ import {FeedsTemplate} from "./FeedTemplate";
 
 
 export const YourFeed = () => {
-    const {offset, limit, pageNum} = useOffset();
+    const {offset, limit, page, setPage} = useOffset();
     const query = `?limit=${limit}&offset=${offset}`;
     const {
         data,
@@ -19,7 +19,8 @@ export const YourFeed = () => {
         <>
             <FeedsTemplate
                 limit={limit}
-                pageNum={pageNum}
+                setPage={setPage}
+                page={page}
                 offset={offset}
                 data={data}
                 isSuccess={isSuccess}
