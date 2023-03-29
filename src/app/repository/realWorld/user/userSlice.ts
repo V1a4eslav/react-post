@@ -1,20 +1,26 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {firebaseApi} from "../firebaseAuth/firebaseAuth";
-import {ISignUpDataResponse} from "../firebaseAuth/models/ISignUpDataResponse";
+import {IAuthResponse} from "../models/IAuthResponse";
+import {RealWorldApi} from "../RealWorldApi";
+
 
 interface UserState {
-    userData: ISignUpDataResponse;
+    userData: {
+        email: string;
+        username: string;
+        bio: any;
+        image: string;
+        token: string;
+    },
     isAuth: boolean;
 }
 
 const initialState: UserState = {
     userData: {
-        kind: '',
-        idToken: '',
         email: '',
-        refreshToken: '',
-        expiresIn: '',
-        localId: '',
+        username: '',
+        bio: '',
+        image: '',
+        token: '',
     },
     isAuth: false,
 }
@@ -23,13 +29,13 @@ const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
-        logoutUser: state => {
+        logoutUser: () => {
             return initialState
         }
     },
     extraReducers: (builder) => {
-        builder.addMatcher(firebaseApi.endpoints.signIn.matchFulfilled, (state, action) => {
-            state.userData = action.payload;
+        builder.addMatcher(RealWorldApi.endpoints.signIn.matchFulfilled, (state, action) => {
+            state.userData = {...action.payload.user};
             state.isAuth = true;
         });
     }

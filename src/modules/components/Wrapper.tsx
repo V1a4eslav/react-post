@@ -10,6 +10,7 @@ const StyledWrapper = styled.div`
   display: flex;
   flex-direction: column;
   overflow: hidden;
+
 `
 
 export const Wrapper = (props: IWrapper) => {

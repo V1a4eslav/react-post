@@ -7,13 +7,13 @@ import {ViewLink} from "../../../UIKit/ViewLinks/ViewLink";
 import {FormButton} from "../../../UIKit/Button/Button";
 import {TextField} from "../../../UIKit/TextField/TextField";
 import {PasswordTextField} from "../../../UIKit/PasswordTextField/PasswordTextField";
-import {useSignUpMutation} from "../../../app/repository/firebaseAuth/firebaseAuth";
-import {IErrorResponse} from "../../../app/repository/firebaseAuth/models/IErrorResponse";
+import {IErrorResponse} from "../../../app/repository/firebase/models/IErrorResponse";
 import {StyledErrorMessage} from "../../../UIKit/TextField/components/StyledErrorMessage";
 import {useNavigate} from "react-router";
 import {ModalSuccess} from "../../../UIKit/Modals/Modal/ModalSuccess";
 import {Modal} from "../../../UIKit/Modals/Modal/Modal";
 import {checkErrorMessage} from "../../../helpers/checkErrorMessage";
+import {useSignUpMutation} from "../../../app/repository/realWorld/RealWorldApi";
 
 
 interface IFormValues {
@@ -42,8 +42,8 @@ export const RegisterForm = (props: IFormProps) => {
 
 
     const onSubmit: SubmitHandler<IFormValues> = useCallback(async (data) => {
-        const {email, password} = data;
-        await signUp({email, password});
+        const {email, password,name: username} = data;
+        await signUp({email, password,username});
 
     }, [signUp]);
 
@@ -52,12 +52,13 @@ export const RegisterForm = (props: IFormProps) => {
         navigate('/login');
     }
 
-    useEffect(() => {
-        if (error) {
-            setErrorMessage((error as IErrorResponse)?.data?.error?.message);
-            checkErrorMessage(errorMessage,setValue,setFocus);
-        }
-    }, [error, errorMessage, setValue, setFocus]);
+    // useEffect(() => {
+    //     if (error) {
+    //         console.log(error)
+    //         setErrorMessage((error as IErrorResponse)?.data?.error?.message);
+    //         // checkErrorMessage(errorMessage,setValue,setFocus);
+    //     }
+    // }, [error, errorMessage, setValue, setFocus]);
 
     useEffect(() => {
         if (isSuccess) {

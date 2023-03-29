@@ -1,4 +1,4 @@
-export interface ISignUpDataResponse {
+export interface IFirebaseAuthDataResponse {
     kind: string;
     idToken: string;
     email: string;

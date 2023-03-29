@@ -8,5 +8,6 @@ export interface IHeaderNav {
 
 export const HeaderNavStyle = styled.nav`
   display: flex;
+  align-items: center;
   gap: 20px;
 `;

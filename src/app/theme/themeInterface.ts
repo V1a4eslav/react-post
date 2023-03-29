@@ -5,33 +5,31 @@ export interface Colors {
     secondaryText: string;
     translucentPrimary: string;
     translucentSecondary: string;
+    errorColor: string;
 }
 
-export interface Size {
+export interface Sizes {
     sizeThink: string;
     sizeExtraLight: string;
     sizeLight: string;
     sizeSemiLight: string;
     sizeNormal: string;
     sizeMedium: string;
+    sizeBold: string;
 }
 
-export interface Media {
+export interface MediaQueries {
     phone: string;
     tablet: string;
     laptop: string;
 }
 
-export interface ICurrentTheme {
+export interface Theme {
     colors: Colors;
-    size: Size;
-    media: Media;
+    size: Sizes;
+    media: MediaQueries;
 }
 
-export interface Themes {
-    main: ICurrentTheme;
-}
-
-export interface RootObject {
-    themes: Themes;
+export interface ITheme {
+    theme:Theme
 }

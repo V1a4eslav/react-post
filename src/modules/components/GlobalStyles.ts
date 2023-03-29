@@ -1,6 +1,7 @@
 import {createGlobalStyle} from "styled-components";
 
 export const GlobalStyles = createGlobalStyle`
+
   * {
     padding: 0px;
     margin: 0px;
@@ -33,7 +34,7 @@ export const GlobalStyles = createGlobalStyle`
   body {
     color: #000;
     line-height: 1;
-    font-family: 'Montserrat', sans-serif;;
+    font-family: 'Titi', sans-serif;
     font-size: 14px;
     //text-rendering: optimizeLegibility;
     -ms-text-size-adjust: 100%;
@@ -41,6 +42,7 @@ export const GlobalStyles = createGlobalStyle`
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overflow-y: scroll;
   }
 
   input,

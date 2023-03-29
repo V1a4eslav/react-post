@@ -1,22 +1,20 @@
 import React, {useCallback, useEffect, useState} from "react";
+import {useNavigate} from "react-router";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {IFormProps} from "../../../UIKit/Form/StyleComponent";
 import {MForm} from "../../../UIKit/Form/MForm";
 import {Title} from "../../../UIKit/Title/Title";
 import {ViewLink} from "../../../UIKit/ViewLinks/ViewLink";
 import {TextField} from "../../../UIKit/TextField/TextField";
-import {FormButton} from "../../../UIKit/Button/Button";
 import {PasswordTextField} from "../../../UIKit/PasswordTextField/PasswordTextField";
-import {StyledErrorMessage} from "../../../UIKit/TextField/components/StyledErrorMessage";
-import {useSignInMutation} from "../../../app/repository/firebaseAuth/firebaseAuth";
-import {IErrorResponse} from "../../../app/repository/firebaseAuth/models/IErrorResponse";
-import {checkErrorMessage} from "../../../helpers/checkErrorMessage";
-import {useNavigate} from "react-router";
+import {useSignInMutation} from "../../../app/repository/realWorld/RealWorldApi";
+import {FormButton} from "src/UIKit/Button/Button";
+import {StyledErrorMessage} from "src/UIKit/TextField/components/StyledErrorMessage";
 
 
 interface IFormValues {
-    email: string,
-    password: string,
+        email: string,
+        password: string,
 };
 
 export const LoginForm = (props: IFormProps) => {
@@ -45,10 +43,10 @@ export const LoginForm = (props: IFormProps) => {
     }, [isSuccess])
 
     useEffect(() => {
-        if (error) {
-            setErrorMessage((error as IErrorResponse)?.data?.error?.message);
-            checkErrorMessage(errorMessage, setValue, setFocus);
-        }
+        // if (error) {
+        //     setErrorMessage((error as IErrorResponse)?.data?.error?.message);
+        //     checkErrorMessage(errorMessage, setValue, setFocus);
+        // }
     }, [error, errorMessage, setValue, setFocus]);
 
     return (
@@ -92,3 +90,4 @@ export const LoginForm = (props: IFormProps) => {
 
     );
 };
+

@@ -16,13 +16,12 @@ export const Modal = ({isOpen, onCloseModal, children}: IModal) => (
                 animate={{opacity: 1}}
                 exit={{opacity: 0}}
                 transition={{duration: 0.2}}>
+                <ButtonClose onClick={onCloseModal}>X</ButtonClose>
                 <ModalContent
                     initial={{y: 50}}
                     animate={{y: 0}}
                     exit={{y: 50}}
-                    transition={{duration: .7}}
-                >
-                    <ButtonClose onClick={onCloseModal}>X</ButtonClose>
+                    transition={{duration: .7}}>
                     {children}
                 </ModalContent>
             </StyledModal>)}

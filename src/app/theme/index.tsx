@@ -1,4 +1,6 @@
-export const themes= {
+import {Colors, MediaQueries, Sizes, Theme} from "./themeInterface";
+
+export const themes = {
     main: {
         colors: {
             primary: '#5CB85C',
@@ -16,7 +18,7 @@ export const themes= {
             sizeSemiLight: '19.2px',
             sizeNormal: '24px',
             sizeMedium: '44.8px',
-
+            sizeBold: '56px'
         },
         media: {
             phone: '(max-width: 425px)',

@@ -1,9 +1,15 @@
 import {useDispatch} from "react-redux";
 import {bindActionCreators} from "@reduxjs/toolkit";
-import {userActions} from "../app/repository/user/userSlice";
+import {tagActions} from "../app/repository/realWorld/tagsSlice";
+import {yourFeedsActions} from "../app/repository/realWorld/yourFeedsSlice";
+import {globalFeedsActions} from "../app/repository/realWorld/feedsGlobalSlice";
+import {userActions} from "../app/repository/realWorld/user/userSlice";
 
 const actions = {
-    ...userActions
+    ...userActions,
+    ...tagActions,
+    ...yourFeedsActions,
+    ...globalFeedsActions,
 }
 
 export const useActions = () => {

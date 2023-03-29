@@ -1,5 +1,4 @@
 import {configureStore, combineReducers} from "@reduxjs/toolkit";
-import {firebaseApi} from "./firebaseAuth/firebaseAuth";
 import {
     persistStore,
     persistReducer,
@@ -8,22 +7,31 @@ import {
     PAUSE,
     PERSIST,
     PURGE,
-    REGISTER,
+    REGISTER, createTransform,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import {userReducer} from "./user/userSlice";
+import {RealWorldApi} from "./realWorld/RealWorldApi";
+import {tagReducer} from "./realWorld/tagsSlice";
+import {userReducer} from "./realWorld/user/userSlice";
 
 
 const persistConfig = {
     key: 'root',
     storage,
-    blacklist: ['Authentication'],
-    whitelist: ['user']
+    blacklist: ['RealWorld'],
+    whitelist: ['user','tags'],
+    // transforms: [
+    //     createTransform(
+    //         (state: string[]) => state, //функция сериализации
+    //         (state: any) => ({...state, realWorld: state.realWorld || []}), //функция десериализации
+    //     ),
+    // ],
 }
 
 const rootReducer = combineReducers({
-    [firebaseApi.reducerPath]: firebaseApi.reducer,
-    user: userReducer
+    [RealWorldApi.reducerPath]:RealWorldApi.reducer,
+    user:userReducer,
+    tags:tagReducer,
 })
 
 
@@ -36,7 +44,7 @@ export const store = configureStore({
             serializableCheck: {
                 ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
             },
-        }).concat(firebaseApi.middleware),
+        }).concat(RealWorldApi.middleware),
 })
 
 export const persistor = persistStore(store);

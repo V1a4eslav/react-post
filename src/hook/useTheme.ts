@@ -1,9 +1,8 @@
 import  {useState} from 'react';
 import {themes} from "../app/theme";
-import {ICurrentTheme} from "../app/theme/themeInterface";
 
 export const useTheme = () => {
-    const [theme, setTheme] = useState<ICurrentTheme>(themes.main);
+    const [theme, setTheme] = useState(themes.main);
 
     return {theme, setTheme};
 };
