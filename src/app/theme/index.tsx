@@ -1,5 +1,3 @@
-import {Colors, MediaQueries, Sizes, Theme} from "./themeInterface";
-
 export const themes = {
     main: {
         colors: {

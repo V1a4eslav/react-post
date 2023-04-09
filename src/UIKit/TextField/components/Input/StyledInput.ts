@@ -27,20 +27,31 @@ export const StyledInput = styled.input.attrs((props: IInputProps) => ({
   outline: 2px solid ${({theme, errors}) => errors ? theme.colors.errorColor : theme.colors.translucentSecondary};
   border-radius: 5px;
 
+  &[disabled] {
+    background-color: #ccc;
+    outline-color: rgba(0, 0, 0, 0.67);
+    color: ${({theme}) => theme.colors.secondaryText};
+    opacity: .3;
+
+    & ~ ${StyledLabel} {
+      opacity: 0;
+    }
+  }
+
   &[type="password"] {
     font-weight: 700;
   }
-  
+
   &::placeholder {
     color: transparent;
   }
 
   &:placeholder-shown ~ ${StyledLabel} {
     cursor: text;
-    top: 35px;
+    top: 33px;
     font-size: 16px;
   }
-  
+
   &:focus ~ ${StyledLabel} {
     ${labelStyles};
 

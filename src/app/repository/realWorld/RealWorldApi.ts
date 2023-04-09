@@ -6,6 +6,12 @@ import {IAuthRequest} from "./models/IAuthRequest";
 import {IAuthResponse} from "./models/IAuthResponse";
 import {IAuthDataResponse} from "./models/ISignUpDataResponse";
 import {RootState} from "../store";
+import {IArticleResponse} from "./models/IArticleResponse";
+import {ICommentResponse} from "./models/ICommentResponse";
+import {IPostCommentResponse} from "./models/IPostCommentResponse";
+import {IArticleRequest} from "./models/IArticleRequest";
+import {IUpdateArticlesRequest} from "./models/IUpdateArticlesRequest";
+import {IUpdateSettingsRequest} from "./models/IUpdateSettingsRequest";
 
 
 const BASE_URL = links.realWorld;
@@ -14,9 +20,9 @@ export const RealWorldApi = createApi({
     reducerPath: 'RealWorld',
     baseQuery: fetchBaseQuery({
         baseUrl: BASE_URL,
-        prepareHeaders:(headers,{getState})=>{
-            const token:string = (getState() as RootState).user.userData.token;
-            if(token){
+        prepareHeaders: (headers, {getState}) => {
+            const token: string = (getState() as RootState).user.userData.token;
+            if (token) {
                 headers.set('Authorization', `Bearer ${token}`)
             } else {
                 headers.set('Content-Type', 'application/json');
@@ -24,6 +30,7 @@ export const RealWorldApi = createApi({
             return headers;
         }
     }),
+    tagTypes: ['Comments', 'Articles'],
     endpoints: build => ({
         signUp: build.mutation<IAuthResponse, IAuthDataResponse>({
             query: (data: IAuthRequest) => ({
@@ -39,6 +46,54 @@ export const RealWorldApi = createApi({
                 body: JSON.stringify({user: data, returnSecureToken: true}),
             }),
         }),
+        updateSettings: build.mutation<IAuthResponse, IUpdateSettingsRequest>({
+            query: (data) => ({
+                url: 'user',
+                method: 'PUT',
+                body: JSON.stringify({user: data, returnSecureToken: true}),
+            })
+        }),
+        newArticle: build.mutation<IArticleResponse, IArticleRequest>({
+            query: body => ({
+                url: `articles/`,
+                method: 'POST',
+                body: {article: body}
+            })
+        }),
+        updateArticle: build.mutation<IArticleResponse, IUpdateArticlesRequest>({
+            query: ({query, body}) => ({
+                url: `articles/${query}`,
+                method: 'PUT',
+                body: {article: body}
+            })
+        }),
+        postComment: build.mutation<IPostCommentResponse, IPostCommentRequest>({
+            query: ({query, comment}) => ({
+                url: `articles/${query}/comments`,
+                method: 'POST',
+                body: {comment}
+            }),
+            invalidatesTags: ['Comments']
+        }),
+        deleteArticleComment: build.mutation<any, any>({
+            query: ({slug, id}) => ({
+                url: `articles/${slug}/comments/${id}`,
+                method: 'DELETE'
+            }),
+            invalidatesTags: ['Comments']
+        }),
+        deleteArticle: build.mutation<void, string>({
+            query: (query) => ({
+                url: `articles/${query}`,
+                method: 'DELETE'
+            }),
+            invalidatesTags: ['Articles']
+        }),
+        getArticle: build.query<IArticleResponse, string>({
+            query: (query) => ({
+                url: `articles/${query}`,
+            })
+        }),
         getTags: build.query<ITagsResponse, void>({
             query: () => ({
                 url: `tags`
@@ -47,7 +102,8 @@ export const RealWorldApi = createApi({
         getGlobalFeeds: build.query<IFeedResponse, void | string>({
             query: (query = '') => ({
                 url: `articles${query}`,
-            })
+            }),
+            providesTags: ['Articles']
         }),
         getYourFeeds: build.query<IFeedResponse, void | string>({
             query: (query = '') => ({
@@ -59,14 +115,29 @@ export const RealWorldApi = createApi({
                 url: `articles?tag=${query}`,
             })
         }),
+        getArticleComment: build.query<ICommentResponse, string>({
+            query: (query) => ({
+                url: `articles/${query}/comments`,
+            }),
+            providesTags: ['Comments']
+        }),
+
     })
 })
 
 export const {
     useSignInMutation,
     useSignUpMutation,
+    useNewArticleMutation,
+    useGetArticleQuery,
     useGetTagsQuery,
     useGetGlobalFeedsQuery,
     useGetYourFeedsQuery,
-    useGetTagFeedsQuery
+    useGetTagFeedsQuery,
+    useGetArticleCommentQuery,
+    usePostCommentMutation,
+    useDeleteArticleCommentMutation,
+    useUpdateArticleMutation,
+    useDeleteArticleMutation,
+    useUpdateSettingsMutation
 } = RealWorldApi;

@@ -21,10 +21,11 @@ export const SFeedUser = styled.div`
   column-gap: 10px;
 `
 export const SFeedUserLogo = styled(Link)`
+  display: inline-block;
   height: 32px;
   width: 32px;
   border-radius: 50%;
-  background-color: #994299;
+  //background-color: #994299;
   overflow: hidden;
 
   img {
@@ -37,8 +38,10 @@ export const SFeedUserInfo = styled.div`
   flex-direction: column;
   row-gap: 3px;
 `
-export const SFeedUserName = styled(Link)`
-  color: ${({theme}: ITheme) => theme.colors.primary};
+export const SFeedUserName = styled(Link).attrs((props) => ({
+    color: props.color
+}))`
+  color: ${props => props.color || (({theme}: ITheme) => theme.colors.primary)};
   font-size: ${({theme}: ITheme) => theme.size.sizeLight};
 
   &:hover {
@@ -72,7 +75,7 @@ export const SFeedLikeContainer = styled.button`
   transition: background-color .3s linear;
 
   &.active,
-  &:hover{
+  &:hover {
     background-color: ${({theme}: ITheme) => theme.colors.primary};
 
     & ${SIconAiOutlineHeart},
@@ -107,7 +110,8 @@ export const SFeedFooterButton = styled(Link)`
   font-size: ${({theme}: ITheme) => theme.size.sizeThink};
   font-weight: 300;
   color: #bbb;
-  &:hover{
+
+  &:hover {
     text-decoration: underline;
   }
 `

@@ -4,6 +4,7 @@ import {ITheme} from "../../app/theme/themeInterface";
 
 export const LoadingWrapper = styled.div`
   position: absolute;
+  top: 50%;
   width: 100%;
   display: flex;
   align-items: center;

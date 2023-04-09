@@ -2,7 +2,7 @@ import styled, {css} from "styled-components";
 
 export const labelStyles = css`
   position: absolute;
-  top:7px;
+  top: 10%;
   left: 5px;
   font-size: 12px;
   color: #9b9b9b;
@@ -14,9 +14,11 @@ export const labelStyles = css`
 
 export const StyledLabel = styled.label`
   ${labelStyles};
+  display: inline-block;
   pointer-events: none;
   background-color: #fff;
   padding: 0 5px;
+  line-height: 1.2;
 `;
 
 

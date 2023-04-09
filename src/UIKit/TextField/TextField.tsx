@@ -10,6 +10,7 @@ import { StyledLabel } from './components/Label/StyledLabel';
 export const TextField = (props: ITextFieldProps) => {
     const {
         register,
+        disabled,
         name,
         placeholder,
         validationRules,
@@ -21,6 +22,7 @@ export const TextField = (props: ITextFieldProps) => {
     return (
         <FormGroup>
             <StyledInput
+                disabled={disabled}
                 placeholder={placeholder}
                 errors={!!errors[name]}
                 {...register(name, validationRules)}

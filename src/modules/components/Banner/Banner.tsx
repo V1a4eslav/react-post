@@ -1,8 +1,8 @@
 import React from 'react';
 import {BannerWrapper} from "./components/BannerWrapper";
-import {Container} from "@mui/material";
 import {BannerTitle} from "./components/BannerTitle";
 import {BannerText} from "./components/BannerText";
+import { Container } from 'src/UIKit/Container';
 
 export const Banner = () => {
     return (
