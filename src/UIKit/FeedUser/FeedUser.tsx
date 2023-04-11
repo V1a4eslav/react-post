@@ -22,7 +22,7 @@ export const FeedUser = (props: IFeedUser) => {
                 <img src={article.author.image} alt="user_logo"/>
             </SFeedUserLogo>
             <SFeedUserInfo>
-                <SFeedUserName to={`/profiles/${article.author.username}`}
+                <SFeedUserName to={`/profile/${article.author.username}`}
                                color={props.colorUserText}>
                     {article.author.username}
                 </SFeedUserName>

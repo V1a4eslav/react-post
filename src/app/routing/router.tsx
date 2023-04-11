@@ -9,14 +9,18 @@ import {YourFeed} from "../../modules/components/Feeds/components/FeedsItems/com
 import {TagFeed} from "../../modules/components/Feeds/components/FeedsItems/components/TagFeed";
 import {RequireAuth} from "../../hoc/RequireAuth";
 import {EditorPage} from "../../modules/pages/editorPage/EditorPage";
-import {ProfilePage} from "../../modules/pages/profilePage/ProfilePage";
 import {SettingsPage} from "../../modules/pages/settingsPage/SettingsPage";
 import {ArticlePage} from "../../modules/pages/ArticlePage/ArticlePage";
+import {MyPosts} from "../../modules/pages/profilePage/components/Posts/MyPosts/MyPosts";
+import {FavoritesPost} from "../../modules/pages/profilePage/components/Posts/FavoritesPost/FavoritesPost";
+import {ProfilePage} from "../../modules/pages/profilePage/ProfilePage";
+import {Navigate} from "react-router";
 
 export const router = createBrowserRouter(createRoutesFromElements(
     <>
         <Route path='/' element={<Layout/>}>
-            <Route path='/' element={<HomePage/>}>
+            <Route index element={<Navigate to='main' replace/>}/>
+            <Route path='main' element={<HomePage/>}>
                 <Route path='your-feed' element={
                     <RequireAuth>
                         <YourFeed/>
@@ -26,6 +30,13 @@ export const router = createBrowserRouter(createRoutesFromElements(
                 <Route index element={<GlobalFeed/>}/>
                 <Route path='article' element={<TagFeed/>}/>
             </Route>
+            <Route path='/profile/:profile' element={
+                <RequireAuth>
+                    <ProfilePage/>
+                </RequireAuth>}>
+                <Route index element={<MyPosts/>}/>
+                <Route path='favorites' element={<FavoritesPost/>}/>
+            </Route>
             <Route path='/editor' element={
                 <RequireAuth>
                     <EditorPage/>
@@ -34,11 +45,6 @@ export const router = createBrowserRouter(createRoutesFromElements(
             <Route path='/editor/:slug' element={
                 <RequireAuth>
                     <EditorPage/>
-                </RequireAuth>
-            }/>
-            <Route path='/profile/:profile' element={
-                <RequireAuth>
-                    <ProfilePage/>
                 </RequireAuth>
             }/>
             <Route path='/settings' element={

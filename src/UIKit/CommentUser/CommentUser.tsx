@@ -12,7 +12,7 @@ export const CommentUser = ({comment}: { comment: Comment }) => {
                 <img src={comment.author.image} alt="user_logo"/>
             </SCommentUserLogo>
             <SCommentUserInfo>
-                <SCommentUserName to={`/profiles/${comment.author.username}`}>
+                <SCommentUserName to={`/profile/${comment.author.username}`}>
                     {comment.author.username}
                 </SCommentUserName>
                 <SCommentUserDate>{date}</SCommentUserDate>

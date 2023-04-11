@@ -5,7 +5,7 @@ import {StyledLink} from "../../../../../UIKit/ViewLinks/StyleComponent";
 export const FeedsLink = ({children, to, ...props}: StyledLink) => {
 
     return (
-        <StyledFeedsLink  to={to} {...props}>
+        <StyledFeedsLink  to={to} {...props} end>
             {children}
         </StyledFeedsLink>
     );

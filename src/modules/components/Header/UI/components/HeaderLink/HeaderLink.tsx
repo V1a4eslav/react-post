@@ -1,16 +1,17 @@
 import {StyledLink} from "../../../../../../UIKit/ViewLinks/StyleComponent";
 import {useMatch} from "react-router-dom";
 import React from "react";
-import { StyledHeaderLink } from "./StyleComponent";
+import {StyledHeaderLink} from "./StyleComponent";
+import {useLocation} from "react-router";
 
-export const HeaderLink = ({children, to, ...props}:StyledLink) => {
-    const match = useMatch({
-        path: to,
-        end: to.length === 1,
-    });
+export const HeaderLink = ({children, to, ...props}: StyledLink) => {
     return (
-        <StyledHeaderLink className={match ? 'active' : ''} to={to} {...props}>
+        <StyledHeaderLink to={to}
+                          {...props}>
             {children}
         </StyledHeaderLink>
+
     );
 }
+
+

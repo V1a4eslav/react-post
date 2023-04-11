@@ -12,7 +12,7 @@ export const HeaderNav = ({className}: IHeaderNav) => {
 
     return (
         <HeaderNavStyle className={className}>
-            <HeaderLink to='/'>Home</HeaderLink>
+            <HeaderLink to='/main'>Home</HeaderLink>
             {!isAuth &&
                 <>
                     <HeaderLink to='/login'>Sign In</HeaderLink>

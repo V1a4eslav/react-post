@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {
     SFeedBody, SFeedFooter, SFeedFooterButton, SFeedFooterTagItem, SFeedFooterTags,
     SFeedHeader, SFeedLikeContainer,
@@ -12,29 +12,33 @@ import {
 import {Article} from "../../../../../../app/repository/realWorld/models/IFeedResponse";
 import {dateFormatter} from "../../../../../../helpers/dateFormatter";
 import {FeedUser} from "../../../../../../UIKit/FeedUser/FeedUser";
+import {
+    useDeleteFavoriteMutation,
+    usePostFavoriteMutation
+} from "../../../../../../app/repository/realWorld/RealWorldApi";
+import {useFavorite} from "../../../../../../hook/useFavorite";
 
 
 export const Feed = ({article}: { article: Article }) => {
-    // const date = (dateFormatter(article.createdAt))
+    const {
+        handleFavArticle,
+        isFavorite,
+        favCount,
+        isLoadingArticleFav,
+        isLoadingArticleDel,
+        setFavCount,
+        setIsFavorite,
+    } = useFavorite(article);
 
     return (
         <SFeedPreview>
             <SFeedHeader>
-                <FeedUser  article={article}/>
-                {/*<SFeedUser>*/}
-                {/*    <SFeedUserLogo to={`/profiles/${article.author.username}`}>*/}
-                {/*        <img src={article.author.image} alt="user_logo"/>*/}
-                {/*    </SFeedUserLogo>*/}
-                {/*    <SFeedUserInfo>*/}
-                {/*        <SFeedUserName to={`/profiles/${article.author.username}`}>*/}
-                {/*            {article.author.username}*/}
-                {/*        </SFeedUserName>*/}
-                {/*        <SFeedUserDate>{date}</SFeedUserDate>*/}
-                {/*    </SFeedUserInfo>*/}
-                {/*</SFeedUser>*/}
-                <SFeedLikeContainer>
+                <FeedUser article={article}/>
+                <SFeedLikeContainer className={isFavorite ? 'active' : ''}
+                                    onClick={handleFavArticle}>
                     <SIconAiOutlineHeart/>
-                    <SLikeCount>{article.favoritesCount}</SLikeCount>
+                    <SLikeCount>{isLoadingArticleFav || isLoadingArticleDel
+                        ? '..' : favCount}</SLikeCount>
                 </SFeedLikeContainer>
             </SFeedHeader>
             <SFeedBody to='#'>

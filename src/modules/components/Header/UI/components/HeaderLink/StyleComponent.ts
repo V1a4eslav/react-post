@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import {Link} from "react-router-dom";
+import {Link, NavLink} from "react-router-dom";
 
-export const StyledHeaderLink = styled(Link)`
+export const StyledHeaderLink = styled(NavLink)`
   display: flex;
   align-items: center;
   column-gap: 3px;

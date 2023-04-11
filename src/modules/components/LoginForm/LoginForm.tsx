@@ -42,12 +42,12 @@ export const LoginForm = (props: IFormProps) => {
         }
     }, [isSuccess])
 
-    useEffect(() => {
+    // useEffect(() => {
         // if (error) {
         //     setErrorMessage((error as IErrorResponse)?.data?.error?.message);
         //     checkErrorMessage(errorMessage, setValue, setFocus);
         // }
-    }, [error, errorMessage, setValue, setFocus]);
+    // }, [error, errorMessage, setValue, setFocus]);
 
     return (
         <MForm onSubmit={handleSubmit(onSubmit)} {...props}>

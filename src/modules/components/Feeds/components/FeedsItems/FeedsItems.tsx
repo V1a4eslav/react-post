@@ -14,13 +14,12 @@ export const FeedsItems: FC = () => {
         <StyledFeedsWrapper>
             <StyledFeedsNav>
                 <FeedsLink to='your-feed'>Your Feed</FeedsLink>
-                <FeedsLink to={!(pathname === '/') ? 'global-feed' : '/'}>Global Feed</FeedsLink>
+                <FeedsLink to={!(pathname === '/main') ? 'global-feed' : '/main'}>Global Feed</FeedsLink>
                 {tag && <FeedsLink to={`article?tag=${tag}`}>#{tag}</FeedsLink>}
             </StyledFeedsNav>
             <StyledFeedsContent ref={feedsContentRef}>
                 <Outlet context={feedsContentRef}/>
             </StyledFeedsContent>
         </StyledFeedsWrapper>
-    )
-        ;
+    );
 };

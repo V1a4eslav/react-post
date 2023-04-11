@@ -38,6 +38,9 @@ const userSlice = createSlice({
             state.userData = {...action.payload.user};
             state.isAuth = true;
         });
+        builder.addMatcher(RealWorldApi.endpoints.updateSettings.matchFulfilled,(state,action)=>{
+            state.userData={...action.payload.user}
+        });
     }
 });
 

@@ -7,7 +7,7 @@ export const useOwn = (username:string) => {
 
     useEffect(() => {
         setIsOwnArticle(user === username)
-    }, []);
+    }, [username]);
 
     return {isOwnArticle}
 }

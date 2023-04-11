@@ -1,6 +1,6 @@
-import {Link} from "react-router-dom";
 import styled, {css} from "styled-components";
 import {ITheme} from "../../app/theme/themeInterface";
+import {Link} from "react-router-dom";
 
 export const ArticleUserButtonStyles = css`
   display: flex;
@@ -14,7 +14,7 @@ export const ArticleUserButtonStyles = css`
   column-gap: 4px;
 `;
 
-export const SArticleUserEditButton = styled.button`
+export const SArticleUserEditButton = styled(Link)`
   ${ArticleUserButtonStyles};
   border: 1px solid #ccc;
   color: #ccc;
@@ -47,11 +47,23 @@ export const SArticleUserFollowButton = styled.button`
   border: 1px solid #ccc;
   color: #ccc;
 
+  &[disabled]{
+    pointer-events: none;
+    cursor: auto;
+  }
+  
   &:hover {
     background-color: #ccc;
     opacity: 1;
     span,svg{
     color: #fff;
+    }
+  }
+
+  &.active:not([disabled]){
+    background-color: #ccc;
+    span,svg{
+      color: ${({theme}:ITheme)=>theme.colors.secondaryText};
     }
   }
 `;
@@ -61,6 +73,7 @@ export const SArticleUserFavButton = styled.button`
   border: 1px solid ${({theme}: ITheme) => theme.colors.primary};
   color: ${({theme}: ITheme) => theme.colors.primary};
 
+  &.active,
   &:hover {
     background-color: ${({theme}: ITheme) => theme.colors.primary};
     opacity: 1;

@@ -13,12 +13,21 @@ import {
 import {useNavigate} from "react-router";
 import {useUpdateSettingsMutation} from "../../../app/repository/realWorld/RealWorldApi";
 import {useActions} from "../../../hook/actions";
+import {StyledErrorMessage} from "../../../UIKit/TextField/components/StyledErrorMessage";
+
+interface SettingsRequest{
+    email: string
+    username: string
+    bio: any
+    image: string
+    password: string
+}
 
 export const SettingsPage = () => {
     const navigate = useNavigate();
     const {logoutUser} = useActions();
     const user = useAppSelector(state => state.user);
-    const [updateSettings, {data, isSuccess, isLoading}] = useUpdateSettingsMutation();
+    const [updateSettings, { isSuccess, isLoading,isError}] = useUpdateSettingsMutation();
 
     const clearUser = useCallback(() => {
         logoutUser()
@@ -27,26 +36,30 @@ export const SettingsPage = () => {
     const {
         register,
         handleSubmit,
-        reset,
         setValue,
         formState: {errors}
-    } = useForm<any>();
+    } = useForm<SettingsRequest>();
 
-    const onSubmit: SubmitHandler<any> = useCallback(async (data) => {
-        console.log(data);
+    const onSubmit: SubmitHandler<SettingsRequest> = useCallback(async (data) => {
+        const request = {...data, token: user.userData.token}
+        await updateSettings(request)
     }, []);
+
+    useEffect(() => {
+        isSuccess && navigate(`/profile/${user.userData.username}`)
+    }, [isSuccess,user]);
 
 
     useEffect(() => {
         if (user) {
             setValue('image', user.userData.image);
-            setValue('name', user.userData.username);
+            setValue('username', user.userData.username);
             setValue('bio', user.userData.bio);
             setValue('email', user.userData.email);
         }
     }, [user, setValue]);
 
-    return (
+        return (
         <SSettingsContainer>
             <Title variant={'h1'} align='center'>Your Settings</Title>
             <SSettingsForm onSubmit={handleSubmit(onSubmit)}>
@@ -58,7 +71,7 @@ export const SettingsPage = () => {
                                     required: 'Required field',
                                 }}/>
                 <SSettingsName register={register}
-                               name='name'
+                               name='username'
                                placeholder='Username'
                                errors={errors}
                                validationRules={{
@@ -90,6 +103,7 @@ export const SettingsPage = () => {
                                            message: "At least one uppercase letter, one lowercase letter and one number."
                                        }
                                    }}/>
+                {isError && <StyledErrorMessage>Something wrong</StyledErrorMessage>}
                 <SSettingsUpdateBtn>Update Settings</SSettingsUpdateBtn>
             </SSettingsForm>
             <SSettingsLogOutBtn onClick={clearUser}>
