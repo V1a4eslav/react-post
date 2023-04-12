@@ -12,7 +12,7 @@ import {
 import {BiPlusMedical} from "react-icons/bi";
 import {SIconAiOutlineHeart} from "../../modules/components/Feeds/components/FeedsItems/components/StyledComponent";
 import {useOwn} from "../../hook/useOwn";
-import {Navigate, useNavigate} from "react-router";
+import { useNavigate} from "react-router";
 import {useDeleteArticleMutation, usePostFavoriteMutation} from "../../app/repository/realWorld/RealWorldApi";
 import {useFavorite} from "../../hook/useFavorite";
 import {useFollow} from "../../hook/useFollow";
@@ -33,7 +33,7 @@ export const UserButtonsBody = (props: IUserButtonsBody) => {
     const [deleteArticle, {
         isSuccess: isSuccessArticleDelete,
         isLoading: isLoadingArticleDelete,
-        error:errorArticleDelete,
+        error: errorArticleDelete,
     }] = useDeleteArticleMutation();
 
     const handleDeleteArticle = useCallback(async () => {
@@ -91,8 +91,10 @@ export const UserButtonsBody = (props: IUserButtonsBody) => {
                     <SArticleUserFavButton className={isFavorite ? 'active' : ''}
                                            onClick={handleFavArticle}>
                         <SIconAiOutlineHeart/>
-                        <span> Favorite Article ({isLoadingArticleFav || isLoadingArticleDel
-                            ? '..' : favCount})</span>
+                        <span>
+                            Favorite Article ({(isLoadingArticleFav || isLoadingArticleDel)
+                            ? '..' : favCount})
+                        </span>
                     </SArticleUserFavButton>
                 </SUserButtonsWrapper>
             }

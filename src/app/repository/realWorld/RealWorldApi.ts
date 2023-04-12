@@ -32,54 +32,85 @@ export const RealWorldApi = createApi({
             return headers;
         }
     }),
-    // tagTypes: [
-    //     // 'Global',
-    //     'Favorite',
-    //     'Follow',
-    //     'Comments',
-    //     'Articles',
-    //     'MyPost'
-    // ],
+    tagTypes: [
+        'GLOBAL',
+        'MY_POST',
+        'YOUR_FEED',
+        'FAVORITE',
+        'ARTICLE',
+        'TAG_FEEDS',
+    ],
 
     endpoints: build => ({
+        getYourFeeds: build.query<IFeedResponse, void | string>({
+            query: (query = '') => ({
+                url: `articles/feed${query}`,
+            }),
+            providesTags: (result) =>
+                result ?
+                    [...result.articles.map(({slug}) => ({type: 'YOUR_FEED' as const, id: slug})),
+                        {type: 'YOUR_FEED', id: 'YOUR_FEED'},
+                    ] : [{type: 'YOUR_FEED', id: 'YOUR_FEED'}],
+        }),
+        getTagFeeds: build.query<IFeedResponse, void | string>({
+            query: (query = '') => ({
+                url: `articles?tag=${query}`,
+            }),
+            providesTags: (result) =>
+                result ?
+                    [...result.articles.map(({slug}) => ({type: 'TAG_FEEDS' as const, id: slug})),
+                        {type: 'TAG_FEEDS', id: 'TAG_FEEDS'},
+                    ] : [{type: 'TAG_FEEDS', id: 'TAG_FEEDS'}],
+        }),
         getGlobalFeeds: build.query<IFeedResponse, void | string>({
             query: (query = '') => ({
                 url: `articles${query}`,
             }),
-            // providesTags: (result) =>
-            //     result ?
-            //         [...result.articles.map(({slug}) => ({type: 'Favorite' as const, id: slug})),
-            //             {type: 'Favorite', id: 'LIST'},
-            //         ] : [{type: 'Favorite', id: 'LIST'}],
+            providesTags: (result) =>
+                result ?
+                    [...result.articles.map(({slug}) => ({type: 'GLOBAL' as const, id: slug})),
+                        {type: 'GLOBAL', id: 'GLOBAL'},
+                    ] : [{type: 'GLOBAL', id: 'GLOBAL'}],
         }),
         postFavorite: build.mutation<IArticleFavoritedResponse, string>({
             query: (slug) => ({
                 url: `articles/${slug}/favorite`,
                 method: 'POST'
             }),
-            // invalidatesTags: (result, error, slug) => [{type: 'Favorite', id: slug}],
+            invalidatesTags: ['TAG_FEEDS', 'FAVORITE', 'YOUR_FEED', 'GLOBAL', 'MY_POST', 'ARTICLE'],
         }),
         deleteFavorite: build.mutation<IArticleFavoritedResponse, string>({
             query: (slug) => ({
                 url: `articles/${slug}/favorite`,
                 method: 'DELETE'
             }),
-            // invalidatesTags: (result, error, slug) => [{type: 'Favorite', id: slug}],
+            invalidatesTags: ['TAG_FEEDS','FAVORITE', 'YOUR_FEED', 'GLOBAL', 'MY_POST', 'ARTICLE'],
         }),
         getFavoritePosts: build.query<IFeedResponse, void | string>({
             query: (query = '') => ({
                 url: `articles?favorited=${query}`,
             }),
+            providesTags: (result) =>
+                result ?
+                    [...result.articles.map(({slug}) => ({type: 'FAVORITE' as const, id: slug})),
+                        {type: 'FAVORITE', id: 'FAVORITE'},
+                    ] : [{type: 'FAVORITE', id: 'FAVORITE'}],
         }),
         getArticle: build.query<IArticleResponse, string>({
             query: (query) => ({
                 url: `articles/${query}`,
             }),
+            providesTags: (result) => [{type: 'ARTICLE', id: result?.article.slug}]
         }),
         getMyPosts: build.query<IFeedResponse, void | string>({
             query: (query = '') => ({
                 url: `articles?author=${query}`,
             }),
+            providesTags: (result) =>
+                result ?
+                    [...result.articles.map(({slug}) => ({type: 'MY_POST' as const, id: slug})),
+                        {type: 'MY_POST', id: 'MY_POST'},
+                    ] : [{type: 'MY_POST', id: 'MY_POST'}],
         }),
         signUp: build.mutation<IAuthResponse, IAuthDataResponse>({
             query: (data: IAuthRequest) => ({
@@ -160,16 +191,6 @@ export const RealWorldApi = createApi({
         getTags: build.query<ITagsResponse, void>({
             query: () => ({
                 url: `tags`
-            })
-        }),
-        getYourFeeds: build.query<IFeedResponse, void | string>({
-            query: (query = '') => ({
-                url: `articles/feed${query}`,
-            }),
-        }),
-        getTagFeeds: build.query<IFeedResponse, void | string>({
-            query: (query = '') => ({
-                url: `articles?tag=${query}`,
             })
         }),
         getArticleComment: build.query<ICommentResponse, string>({

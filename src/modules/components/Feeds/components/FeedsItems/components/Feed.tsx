@@ -22,12 +22,12 @@ import {useFavorite} from "../../../../../../hook/useFavorite";
 export const Feed = ({article}: { article: Article }) => {
     const {
         handleFavArticle,
-        isFavorite,
-        favCount,
+        isSuccessArticleFav,
+        isSuccessArticleDel,
         isLoadingArticleFav,
         isLoadingArticleDel,
-        setFavCount,
-        setIsFavorite,
+        isFavorite,
+        favCount,
     } = useFavorite(article);
 
     return (

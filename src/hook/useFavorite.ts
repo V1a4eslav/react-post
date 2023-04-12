@@ -3,13 +3,13 @@ import {Article} from "../app/repository/realWorld/models/IFeedResponse";
 import {useDeleteFavoriteMutation, usePostFavoriteMutation} from "../app/repository/realWorld/RealWorldApi";
 import {useAppSelector} from "./redux";
 import {useNavigate} from "react-router";
+import {useSearchParams} from "react-router-dom";
 
-export const useFavorite = (items: Article) => {
-    const navigate = useNavigate();
+export const useFavorite = (article: Article) => {
     const isAuth = useAppSelector(state => state.user.isAuth);
-    const {slug} = items;
-    const [isFavorite, setIsFavorite] = useState(items.favorited);
-    const [favCount, setFavCount] = useState(items.favoritesCount);
+    const navigate = useNavigate();
+    const [isFavorite, setIsFavorite] = useState<boolean>(article.favorited);
+    const [favCount, setFavCount] = useState<number>(article.favoritesCount);
 
     const [postFavorite, {
         data: postFavoriteData,
@@ -27,23 +27,22 @@ export const useFavorite = (items: Article) => {
         isError: isErrorArticleDel,
     }] = useDeleteFavoriteMutation();
 
-    const updateFavoriteData = useCallback(async (data: Article) => {
+        const updateFavoriteData = useCallback(async (data: Article) => {
         await setFavCount(data.favoritesCount);
         await setIsFavorite(data.favorited);
     }, [setFavCount, setIsFavorite]);
 
-    const handleFavArticle = useCallback(async () => {
-            if (isAuth) {
-                if (!isFavorite) {
-                    await postFavorite(slug);
-                } else {
-                    await deleteFavorite(slug);
-                }
+    const handleFavArticle = async () => {
+        if (isAuth) {
+            if (!isFavorite) {
+                await postFavorite(article.slug);
             } else {
-                navigate('/login');
+                await deleteFavorite(article.slug);
             }
-        }, [isFavorite, postFavorite, deleteFavorite],
-    );
+        } else {
+            navigate('/login');
+        }
+    }
 
     useEffect(() => {
         postFavoriteData && updateFavoriteData(postFavoriteData.article);
@@ -54,20 +53,19 @@ export const useFavorite = (items: Article) => {
     }, [deleteFavoriteData]);
 
 
+    useEffect(() => {
+        setIsFavorite(article.favorited);
+        setFavCount(article.favoritesCount);
+    }, [article]);
+
+
     return {
         handleFavArticle,
+        isSuccessArticleFav,
+        isSuccessArticleDel,
+        isLoadingArticleFav,
+        isLoadingArticleDel,
         isFavorite,
         favCount,
-        setFavCount,
-        setIsFavorite,
-        isSuccessArticleFav,
-        isLoadingArticleFav,
-        errorArticleFav,
-        isErrorArticleFav,
-        isSuccessArticleDel,
-        isLoadingArticleDel,
-        errorArticleDel,
-        isErrorArticleDel,
     }
 }
-
