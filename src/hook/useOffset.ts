@@ -4,6 +4,7 @@ import {
     useEffect,
     useState
 } from "react";
+import {useSearchParams} from "react-router-dom";
 
 interface IReturnUseOffset {
     offset: number,
@@ -13,9 +14,15 @@ interface IReturnUseOffset {
 }
 
 export const useOffset = (): IReturnUseOffset => {
+    const [searchParams, setSearchParams] = useSearchParams();
+    const pageSearchParams = searchParams.get('page');
+    const pageValue =
+        pageSearchParams && Number(pageSearchParams) > 0
+            ? Number(pageSearchParams)
+            : 1;
     const limit = 10;
+    const [page, setPage] = useState(Number(pageValue));
 
-    const [page, setPage] = useState(1);
     const [offset, setOffset] = useState(0);
 
     useEffect(() => {
