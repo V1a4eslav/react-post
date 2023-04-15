@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {memo, useCallback, useEffect, useState} from 'react';
 import {Article} from "../../app/repository/realWorld/models/IFeedResponse";
 import {SUserButtonsBody, SUserButtonsWrapper} from "./StyledComponent";
 import {FeedUser} from "../FeedUser/FeedUser";
@@ -23,7 +23,7 @@ interface IUserButtonsBody {
     colorUserText?: string
 }
 
-export const UserButtonsBody = (props: IUserButtonsBody) => {
+export const UserButtonsBody = memo((props: IUserButtonsBody) => {
     const isAuth = useAppSelector(state => state.user.isAuth);
 
     const {article, colorUserText} = props;
@@ -36,11 +36,11 @@ export const UserButtonsBody = (props: IUserButtonsBody) => {
         error: errorArticleDelete,
     }] = useDeleteArticleMutation();
 
-    const handleDeleteArticle = useCallback(async () => {
+    const handleDeleteArticle = (async () => {
             !isAuth ?
                 navigate('/login') :
                 await deleteArticle(article.slug);
-        }, [isAuth, article.slug],
+        }
     );
 
     const {
@@ -100,4 +100,4 @@ export const UserButtonsBody = (props: IUserButtonsBody) => {
             }
         </SUserButtonsBody>
     );
-};
+});

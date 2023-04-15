@@ -1,11 +1,44 @@
-import React, {Dispatch, RefObject, SetStateAction, useCallback, useEffect, useState} from 'react';
-import {useGetTagFeedsQuery} from "../../../../../../app/repository/realWorld/RealWorldApi";
+import React, {Dispatch, FC, memo, RefObject, SetStateAction, useCallback, useEffect, useMemo, useState} from 'react';
 import {Feed} from "./Feed";
 import {StyledPagination} from "../../Paginate/StyledComponent";
 import {useLocation, useNavigate, useOutletContext} from "react-router";
 import {LoaderDots} from "../../../../../../UIKit/Loader/Loader";
 import {IFeedResponse} from "../../../../../../app/repository/realWorld/models/IFeedResponse";
-import {useSearchParams} from "react-router-dom";
+
+
+export const FeedList = memo(({data}: { data: IFeedResponse | undefined }) => (
+    <>
+        {data?.articles.map((article, index) => (
+            <Feed key={index} article={article}/>
+        ))}
+    </>
+));
+
+interface IPagination {
+    pageCount: number,
+    handlePageChange: (selectedItem: { selected: number; }) => void,
+    page: number
+}
+
+export const Pagination = memo(({pageCount, handlePageChange, page}: IPagination) => (
+        <>
+            <StyledPagination
+                previousLabel={"previous"}
+                nextLabel={"next"}
+                breakLabel={"..."}
+                breakClassName={"break-me"}
+                pageCount={pageCount}
+                marginPagesDisplayed={2}
+                pageRangeDisplayed={5}
+                onPageChange={handlePageChange}
+                containerClassName={"pagination"}
+                activeClassName={"active"}
+                forcePage={page - 1}
+            />
+
+        </>
+    )
+);
 
 interface IFeedTemplate {
     setPage: Dispatch<SetStateAction<number>>
@@ -20,30 +53,37 @@ interface IFeedTemplate {
     isFetching: boolean,
 }
 
-export const FeedsTemplate = ({
-                                  data,
-                                  setPage,
-                                  isSuccess,
-                                  isError,
-                                  isLoading,
-                                  isFetching,
-                                  tag,
-                                  limit,
-                                  page,
-                              }: IFeedTemplate) => {
+export const FeedsTemplate: FC<IFeedTemplate> = memo(({
+                                                          data,
+                                                          setPage,
+                                                          isSuccess,
+                                                          isError,
+                                                          isLoading,
+                                                          isFetching,
+                                                          tag,
+                                                          limit,
+                                                          page,
+                                                      }) => {
     const navigate = useNavigate();
     const location = useLocation();
     const refItem = useOutletContext<RefObject<HTMLDivElement>>();
 
-    const [pageCount, setPageCount] = useState<number | null>(null);
+    // const [pageCount, setPageCount] = useState<number | null>(null);
     const [isLoadingScrollToTop, setIsLoadingScrollToTop] = useState(false);
 
-    useEffect(() => {
+    // useEffect(() => {
+    //     if (data) {
+    //         const count = Math.ceil(data.articlesCount / limit);
+    //         setPageCount(count);
+    //     }
+    // }, [data, tag]);
+
+    const pageCount = useMemo(() => {
         if (data) {
-            const count = Math.ceil(data.articlesCount / limit);
-            setPageCount(count);
+            return Math.ceil(data.articlesCount / limit);
         }
-    }, [data, tag]);
+        return null;
+    }, [data, limit]);
 
     const scrollToTop = useCallback(() => {
         setIsLoadingScrollToTop(true);
@@ -67,25 +107,13 @@ export const FeedsTemplate = ({
             {isFetching && !isLoading && <LoaderDots/>}
             {isLoading && <LoaderDots/>}
             {isError && <p>Error</p>}
-            {isSuccess && data?.articles.map((article, index: number) => (
-                <Feed key={index} article={article}/>
-            ))}
+            {isSuccess && <FeedList data={data}/>}
             {data?.articles.length && pageCount ?
-                (<StyledPagination
-                    previousLabel={"previous"}
-                    nextLabel={"next"}
-                    breakLabel={"..."}
-                    breakClassName={"break-me"}
-                    pageCount={pageCount}
-                    marginPagesDisplayed={2}
-                    pageRangeDisplayed={5}
-                    onPageChange={handlePageChange}
-                    containerClassName={"pagination"}
-                    activeClassName={"active"}
-                    forcePage={page - 1}
-                />) :
-                (isSuccess && !data?.articles.length && <p>No article...</p>)}
-
+                (<Pagination handlePageChange={handlePageChange}
+                             page={page}
+                             pageCount={pageCount}/>) :
+                (isSuccess && !data?.articles.length && <p>No article...</p>)
+            }
         </>
     );
-};
+});

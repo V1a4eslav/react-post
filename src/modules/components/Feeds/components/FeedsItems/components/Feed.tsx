@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {FC, memo, useCallback, useEffect, useState} from 'react';
 import {
     SFeedBody, SFeedFooter, SFeedFooterButton, SFeedFooterTagItem, SFeedFooterTags,
     SFeedHeader, SFeedLikeContainer,
@@ -19,7 +19,7 @@ import {
 import {useFavorite} from "../../../../../../hook/useFavorite";
 
 
-export const Feed = ({article}: { article: Article }) => {
+export const Feed:FC<{article:Article}> = React.memo(({article}) => {
     const {
         handleFavArticle,
         isSuccessArticleFav,
@@ -55,4 +55,4 @@ export const Feed = ({article}: { article: Article }) => {
             </SFeedFooter>
         </SFeedPreview>
     );
-};
+});

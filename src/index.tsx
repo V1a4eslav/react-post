@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {StrictMode} from 'react';
 import {App} from './app/App';
 import ReactDOM from "react-dom/client";
 import './firebase';
@@ -10,7 +10,9 @@ const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement)
 root.render(
     <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-            <App/>
+            <StrictMode>
+                <App/>
+            </StrictMode>
         </PersistGate>
     </Provider>
 );

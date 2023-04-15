@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import {Article} from "../../app/repository/realWorld/models/IFeedResponse";
 import {
     SFeedUser, SFeedUserDate, SFeedUserInfo,
@@ -12,7 +12,7 @@ interface IFeedUser {
     colorUserText?: string
 }
 
-export const FeedUser = (props: IFeedUser) => {
+export const FeedUser = memo((props: IFeedUser) => {
     const {article} = props;
     const date = (dateFormatter(article.createdAt));
 
@@ -30,4 +30,4 @@ export const FeedUser = (props: IFeedUser) => {
             </SFeedUserInfo>
         </SFeedUser>
     );
-};
+});

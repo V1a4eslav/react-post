@@ -1,4 +1,4 @@
-import React from "react";
+import React, {memo} from "react";
 import {StyledFeedsLink} from "./StyledComponent";
 import {StyledLink} from "../../../../../UIKit/ViewLinks/StyleComponent";
 

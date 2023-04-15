@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {useSearchParams} from "react-router-dom";
 import {useOffset} from "../../../../../../hook/useOffset";
 import {FeedsTemplate} from "./FeedTemplate";
@@ -8,7 +8,9 @@ export const TagFeed = () => {
     const [searchParams] = useSearchParams();
     const {offset, limit,page, setPage} = useOffset();
     const tag = searchParams.get('tag');
-    const query = `${tag}&limit=${limit}&offset=${offset}`;
+    const query = useMemo(() => `${tag}&limit=${limit}&offset=${offset}`,
+        [limit, offset]);
+
     const {
         data,
         isSuccess,
@@ -16,6 +18,7 @@ export const TagFeed = () => {
         isLoading,
         isFetching
     } = useGetTagFeedsQuery(query);
+
     return (
         <>
             <FeedsTemplate

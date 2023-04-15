@@ -1,12 +1,15 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {useGetYourFeedsQuery} from "../../../../../../app/repository/realWorld/RealWorldApi";
 import {useOffset} from "../../../../../../hook/useOffset";
 import {FeedsTemplate} from "./FeedTemplate";
+import {TagItem} from "../../FeedsTags/TagItem";
 
 
 export const YourFeed = () => {
     const {offset, limit, page, setPage} = useOffset();
-    const query = `?limit=${limit}&offset=${offset}`;
+    const query = useMemo(() => `?limit=${limit}&offset=${offset}`,
+        [limit, offset]);
+
     const {
         data,
         isSuccess,
@@ -30,3 +33,4 @@ export const YourFeed = () => {
         </>
     );
 };
+

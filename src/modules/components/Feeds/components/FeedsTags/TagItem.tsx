@@ -1,5 +1,5 @@
 import {StyledItemTag} from "./StyledFeedsTags";
-import React, {ReactNode} from "react";
+import React, {memo, ReactNode} from "react";
 
 export interface ITagItem {
     children: ReactNode,
@@ -14,6 +14,6 @@ export interface ITagItem {
     disabled?: boolean
 }
 
-export const TagItem = (props: ITagItem) => (
+export const TagItem = memo((props: ITagItem) => (
     <StyledItemTag {...props}/>
-);
+));

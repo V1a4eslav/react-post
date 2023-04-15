@@ -3,7 +3,6 @@ import {Article} from "../app/repository/realWorld/models/IFeedResponse";
 import {useDeleteFavoriteMutation, usePostFavoriteMutation} from "../app/repository/realWorld/RealWorldApi";
 import {useAppSelector} from "./redux";
 import {useNavigate} from "react-router";
-import {useSearchParams} from "react-router-dom";
 
 export const useFavorite = (article: Article) => {
     const isAuth = useAppSelector(state => state.user.isAuth);
@@ -27,12 +26,12 @@ export const useFavorite = (article: Article) => {
         isError: isErrorArticleDel,
     }] = useDeleteFavoriteMutation();
 
-        const updateFavoriteData = useCallback(async (data: Article) => {
-        await setFavCount(data.favoritesCount);
-        await setIsFavorite(data.favorited);
+        const updateFavoriteData = useCallback( (data: Article) => {
+         setFavCount(data.favoritesCount);
+         setIsFavorite(data.favorited);
     }, [setFavCount, setIsFavorite]);
 
-    const handleFavArticle = async () => {
+    const handleFavArticle =useCallback( async () => {
         if (isAuth) {
             if (!isFavorite) {
                 await postFavorite(article.slug);
@@ -42,7 +41,7 @@ export const useFavorite = (article: Article) => {
         } else {
             navigate('/login');
         }
-    }
+    },[isFavorite]);
 
     useEffect(() => {
         postFavoriteData && updateFavoriteData(postFavoriteData.article);
