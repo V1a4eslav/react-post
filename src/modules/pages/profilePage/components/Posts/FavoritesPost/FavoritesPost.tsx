@@ -1,6 +1,5 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {useOffset} from "../../../../../../hook/useOffset";
-import {useAppSelector} from "../../../../../../hook/redux";
 import {
     useGetFavoritePostsQuery,
 } from "../../../../../../app/repository/realWorld/RealWorldApi";
@@ -8,7 +7,7 @@ import {FeedsTemplate} from "../../../../../components/Feeds/components/FeedsIte
 import {useLocation} from "react-router";
 
 export const FavoritesPost = () => {
-    const {offset, limit, page, setPage} = useOffset();
+    const {offset, limit, page} = useOffset();
     const location = useLocation();
    const user =location.pathname.split('/')[2];
     const query = `${user}&limit=${limit}&offset=${offset}`;
@@ -19,11 +18,18 @@ export const FavoritesPost = () => {
         isLoading,
         isFetching
     } = useGetFavoritePostsQuery(query);
+
+    const pageCount = useMemo(() => {
+        if (data) {
+            return Math.ceil(data.articlesCount / limit);
+        }
+        return null;
+    }, [data?.articlesCount, limit]);
+
     return (
         <>
             <FeedsTemplate
-                limit={limit}
-                setPage={setPage}
+                pageCount={pageCount}
                 page={page}
                 offset={offset}
                 data={data}

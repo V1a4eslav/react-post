@@ -1,4 +1,4 @@
-import React, {memo} from 'react';
+import React, {memo, useMemo} from 'react';
 import {Article} from "../../app/repository/realWorld/models/IFeedResponse";
 import {
     SFeedUser, SFeedUserDate, SFeedUserInfo,
@@ -12,9 +12,9 @@ interface IFeedUser {
     colorUserText?: string
 }
 
-export const FeedUser = memo((props: IFeedUser) => {
-    const {article} = props;
-    const date = (dateFormatter(article.createdAt));
+export const FeedUser = memo(({article,colorUserText}: IFeedUser) => {
+    const date = useMemo(() => dateFormatter(article.createdAt),
+        [article.createdAt]);
 
     return (
         <SFeedUser>
@@ -23,7 +23,7 @@ export const FeedUser = memo((props: IFeedUser) => {
             </SFeedUserLogo>
             <SFeedUserInfo>
                 <SFeedUserName to={`/profile/${article.author.username}`}
-                               color={props.colorUserText}>
+                               color={colorUserText}>
                     {article.author.username}
                 </SFeedUserName>
                 <SFeedUserDate>{date}</SFeedUserDate>

@@ -19,7 +19,7 @@ export const ArticleBody = ({data, isFetching, isLoading, isSuccess}: IArticlePr
                 <SArticleBodyText>{body}</SArticleBodyText>
                 <SArticleBodyTagItems>
                     {tagList.map((item, index) => (
-                        <SArticleTagItem key={item} to={`/article?tag=${item}`}>{item}</SArticleTagItem>
+                        <SArticleTagItem key={item} to={`/main/article?tag=${item}`}>{item}</SArticleTagItem>
                     ))}
                 </SArticleBodyTagItems>
             </SArticleInnerBody>

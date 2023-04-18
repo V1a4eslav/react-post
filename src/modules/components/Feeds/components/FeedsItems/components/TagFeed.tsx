@@ -6,10 +6,11 @@ import {useGetTagFeedsQuery} from "../../../../../../app/repository/realWorld/Re
 
 export const TagFeed = () => {
     const [searchParams] = useSearchParams();
-    const {offset, limit,page, setPage} = useOffset();
+    const {offset, limit,page} = useOffset();
     const tag = searchParams.get('tag');
+
     const query = useMemo(() => `${tag}&limit=${limit}&offset=${offset}`,
-        [limit, offset]);
+        [limit, offset,tag]);
 
     const {
         data,
@@ -19,12 +20,18 @@ export const TagFeed = () => {
         isFetching
     } = useGetTagFeedsQuery(query);
 
+    const pageCount = useMemo(() => {
+        if (data) {
+            return Math.ceil(data.articlesCount / limit);
+        }
+        return null;
+    }, [data?.articlesCount, limit]);
+
     return (
         <>
             <FeedsTemplate
+                pageCount={pageCount}
                 tag={tag}
-                setPage={setPage}
-                limit={limit}
                 page={page}
                 offset={offset}
                 data={data}

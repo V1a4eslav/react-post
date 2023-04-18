@@ -1,10 +1,12 @@
-import React, {useMemo} from 'react';
-import {useGetGlobalFeedsQuery} from "../../../../../../app/repository/realWorld/RealWorldApi";
+import React, {useEffect, useMemo, useState} from 'react';
+import {
+    useGetGlobalFeedsQuery,
+} from "../../../../../../app/repository/realWorld/RealWorldApi";
 import {useOffset} from "../../../../../../hook/useOffset";
 import {FeedsTemplate} from "./FeedTemplate";
 
 export const GlobalFeed = () => {
-    const {offset, limit, page, setPage} = useOffset();
+    const {offset, limit, page} = useOffset();
     const query = useMemo(() => `?limit=${limit}&offset=${offset}`,
         [limit, offset]);
 
@@ -16,13 +18,18 @@ export const GlobalFeed = () => {
         isFetching,
     } = useGetGlobalFeedsQuery(query);
 
+    const pageCount = useMemo(() => {
+        if (data) {
+            return Math.ceil(data.articlesCount / limit);
+        }
+        return null;
+    }, [data?.articlesCount, limit]);
+
     return (
         <>
             <FeedsTemplate
-                limit={limit}
-                setPage={setPage}
+                pageCount={pageCount}
                 page={page}
-                offset={offset}
                 data={data}
                 isSuccess={isSuccess}
                 isError={isError}

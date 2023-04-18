@@ -14,6 +14,6 @@ export interface ITagItem {
     disabled?: boolean
 }
 
-export const TagItem = memo((props: ITagItem) => (
+export const TagItem = (props: ITagItem) => (
     <StyledItemTag {...props}/>
-));
+);

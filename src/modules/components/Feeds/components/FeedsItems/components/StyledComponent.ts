@@ -85,7 +85,7 @@ export const SFeedLikeContainer = styled.button`
   }
 `
 
-export const SFeedBody = styled(Link)`
+export const SFeedBody = styled.div`
   display: inline-block;
   margin-bottom: 15px;
 `

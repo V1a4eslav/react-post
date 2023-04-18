@@ -1,35 +1,12 @@
-import React, {FC, memo} from 'react';
+import React, {FC} from 'react';
 import {AnimatePresence} from "framer-motion";
 import {useGetTagsQuery} from "../../../../../app/repository/realWorld/RealWorldApi";
 import {useAppSelector} from "../../../../../hook/redux";
 import {StyledFeedsTagContent, StyledFeedsTags, StyledTagItems} from "./StyledFeedsTags";
 import {Title} from "../../../../../UIKit/Title/Title";
-import {TagItem} from "./TagItem";
 import {useSearchParams} from "react-router-dom";
 import {LoaderDots} from "../../../../../UIKit/Loader/Loader";
-
-interface ITagList {
-    tags: string[],
-    tag: string
-}
-
-const TagList = memo(({tags, tag}: ITagList) => (
-    <>
-        {tags?.map((item, index) => (
-            <TagItem to={`article?tag=${item}`}
-                     disabled={tag === item}
-                     layout
-                     key={index}
-                     initial={{opacity: 0, y: 20}}
-                     animate={{opacity: 1, y: 0}}
-                     transition={{delay: index * 0.1, duration: 0.5}}
-                     exit={{opacity: 0, y: -20}}
-            >
-                {item}
-            </TagItem>
-        ))}
-    </>
-));
+import {TagList} from "./TagList";
 
 export const FeedsTags: FC = () => {
     const {isError, isSuccess,isLoading,isFetching} = useGetTagsQuery();

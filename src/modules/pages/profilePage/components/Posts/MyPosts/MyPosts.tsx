@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {useOffset} from "../../../../../../hook/useOffset";
 import {useAppSelector} from "../../../../../../hook/redux";
 import {FeedsTemplate} from "../../../../../components/Feeds/components/FeedsItems/components/FeedTemplate";
@@ -6,8 +6,8 @@ import {useGetMyPostsQuery} from "../../../../../../app/repository/realWorld/Rea
 import {useParams} from "react-router-dom";
 
 export const MyPosts = () => {
-    const {offset, limit, page, setPage} = useOffset();
-    const {profile:user} = useParams();
+    const {offset, limit, page} = useOffset();
+    const {profile: user} = useParams();
 
     const query = `${user}&limit=${limit}&offset=${offset}`;
     const {
@@ -17,11 +17,18 @@ export const MyPosts = () => {
         isLoading,
         isFetching
     } = useGetMyPostsQuery(query);
+
+    const pageCount = useMemo(() => {
+        if (data) {
+            return Math.ceil(data.articlesCount / limit);
+        }
+        return null;
+    }, [data?.articlesCount, limit]);
+
     return (
         <>
             <FeedsTemplate
-                limit={limit}
-                setPage={setPage}
+                pageCount={pageCount}
                 page={page}
                 offset={offset}
                 data={data}

@@ -39,9 +39,28 @@ export const RealWorldApi = createApi({
         'FAVORITE',
         'ARTICLE',
         'TAG_FEEDS',
+        'COMMENTS',
+        'FOLLOW'
     ],
 
     endpoints: build => ({
+        getArticleComment: build.query<ICommentResponse, string>({
+            query: (query) => ({
+                url: `articles/${query}/comments`,
+            }),
+            providesTags: (result) =>
+                result ?
+                    [...result.comments.map(({id}) => ({type: 'COMMENTS' as const, id})),
+                        {type: 'COMMENTS', id: 'COMMENTS'},
+                    ] : [{type: 'COMMENTS', id: 'COMMENTS'}]
+        }),
+        deleteArticle: build.mutation<void, string>({
+            query: (query) => ({
+                url: `articles/${query}`,
+                method: 'DELETE'
+            }),
+            invalidatesTags: ['GLOBAL', 'MY_POST']
+        }),
         getYourFeeds: build.query<IFeedResponse, void | string>({
             query: (query = '') => ({
                 url: `articles/feed${query}`,
@@ -84,7 +103,7 @@ export const RealWorldApi = createApi({
                 url: `articles/${slug}/favorite`,
                 method: 'DELETE'
             }),
-            invalidatesTags: ['TAG_FEEDS','FAVORITE', 'YOUR_FEED', 'GLOBAL', 'MY_POST', 'ARTICLE'],
+            invalidatesTags: ['TAG_FEEDS', 'FAVORITE', 'YOUR_FEED', 'GLOBAL', 'MY_POST', 'ARTICLE'],
         }),
         getFavoritePosts: build.query<IFeedResponse, void | string>({
             query: (query = '') => ({
@@ -139,6 +158,7 @@ export const RealWorldApi = createApi({
                 method: 'POST',
                 body: {article: body}
             }),
+            invalidatesTags: ['GLOBAL', 'MY_POST']
         }),
         updateArticle: build.mutation<IArticleResponse, IUpdateArticlesRequest>({
             query: ({query, body}) => ({
@@ -153,52 +173,40 @@ export const RealWorldApi = createApi({
                 method: 'POST',
                 body: {comment}
             }),
+            invalidatesTags:['COMMENTS']
         }),
         postFollow: build.mutation<IProfileResponse, string>({
             query: (query) => ({
                 url: `profiles/${query}/follow`,
                 method: 'POST',
             }),
-            // invalidatesTags: ['Follow']
+            invalidatesTags: ['FOLLOW']
         }),
         deleteFollow: build.mutation<IProfileResponse, string>({
             query: (query) => ({
                 url: `profiles/${query}/follow`,
                 method: 'DELETE',
             }),
-            // invalidatesTags: ['Follow']
+            invalidatesTags: ['FOLLOW']
         }),
         deleteArticleComment: build.mutation<any, any>({
             query: ({slug, id}) => ({
                 url: `articles/${slug}/comments/${id}`,
                 method: 'DELETE'
             }),
-            // invalidatesTags: ['Comments']
-        }),
-        deleteArticle: build.mutation<void, string>({
-            query: (query) => ({
-                url: `articles/${query}`,
-                method: 'DELETE'
-            }),
-            // invalidatesTags: ['Articles']
+            invalidatesTags: ['COMMENTS']
         }),
         getProfile: build.query<IProfileResponse, string>({
             query: (query) => ({
                 url: `profiles/${query}`,
             }),
-            // providesTags: ['Follow']
+            providesTags: ['FOLLOW']
         }),
         getTags: build.query<ITagsResponse, void>({
             query: () => ({
                 url: `tags`
             })
         }),
-        getArticleComment: build.query<ICommentResponse, string>({
-            query: (query) => ({
-                url: `articles/${query}/comments`,
-            }),
-        }),
-
     })
 })
 
@@ -223,8 +231,5 @@ export const {
     useGetMyPostsQuery,
     useDeleteFollowMutation,
     usePostFollowMutation,
-    useGetProfileQuery
+    useGetProfileQuery,
 } = RealWorldApi;
-
-// providesTags: ['Articles']
-// providesTags: ['Favorite']

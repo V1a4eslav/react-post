@@ -6,7 +6,7 @@ import {TagItem} from "../../FeedsTags/TagItem";
 
 
 export const YourFeed = () => {
-    const {offset, limit, page, setPage} = useOffset();
+    const {offset, limit, page} = useOffset();
     const query = useMemo(() => `?limit=${limit}&offset=${offset}`,
         [limit, offset]);
 
@@ -18,11 +18,17 @@ export const YourFeed = () => {
         isFetching
     } = useGetYourFeedsQuery(query);
 
+    const pageCount = useMemo(() => {
+        if (data) {
+            return Math.ceil(data.articlesCount / limit);
+        }
+        return null;
+    }, [data?.articlesCount, limit]);
+
     return (
         <>
             <FeedsTemplate
-                limit={limit}
-                setPage={setPage}
+                pageCount={pageCount}
                 page={page}
                 offset={offset}
                 data={data}
