@@ -40,7 +40,6 @@ export const RealWorldApi = createApi({
         'ARTICLE',
         'TAG_FEEDS',
         'COMMENTS',
-        'FOLLOW'
     ],
 
     endpoints: build => ({
@@ -180,14 +179,16 @@ export const RealWorldApi = createApi({
                 url: `profiles/${query}/follow`,
                 method: 'POST',
             }),
-            invalidatesTags: ['FOLLOW']
+            invalidatesTags: ['ARTICLE',
+                {type: 'YOUR_FEED', id: 'YOUR_FEED'}]
         }),
         deleteFollow: build.mutation<IProfileResponse, string>({
             query: (query) => ({
                 url: `profiles/${query}/follow`,
                 method: 'DELETE',
             }),
-            invalidatesTags: ['FOLLOW']
+            invalidatesTags: ['ARTICLE',
+                {type: 'YOUR_FEED', id: 'YOUR_FEED'}]
         }),
         deleteArticleComment: build.mutation<any, any>({
             query: ({slug, id}) => ({
@@ -200,7 +201,7 @@ export const RealWorldApi = createApi({
             query: (query) => ({
                 url: `profiles/${query}`,
             }),
-            providesTags: ['FOLLOW']
+            providesTags: ['ARTICLE']
         }),
         getTags: build.query<ITagsResponse, void>({
             query: () => ({

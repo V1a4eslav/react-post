@@ -7,9 +7,8 @@ export interface IFormGroupProps {
 
 export const StyledFormGroup = styled.div`
   position: relative;
-  padding: 15px 0 0;
   
   &:not(:last-child){
-    margin-bottom: 10px;
+    margin-bottom: 12px;
   }
 `

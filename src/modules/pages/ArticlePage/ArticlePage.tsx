@@ -8,8 +8,10 @@ import {ArticleFooter} from "./components/ArticleFooter/ArticleFooter";
 
 export const ArticlePage = () => {
     const {title} = useParams();
-    const {data, isLoading, isFetching, isSuccess} = useGetArticleQuery(`${title}`);
-
+    const {data,
+        isLoading,
+        isFetching,
+        isSuccess} = useGetArticleQuery(`${title}`);
     return (
         <>
             {data &&

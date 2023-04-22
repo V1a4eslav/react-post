@@ -30,10 +30,7 @@ export const router = createBrowserRouter(createRoutesFromElements(
                 <Route index element={<GlobalFeed/>}/>
                 <Route path='article' element={<TagFeed/>}/>
             </Route>
-            <Route path='/profile/:profile' element={
-                <RequireAuth>
-                    <ProfilePage/>
-                </RequireAuth>}>
+            <Route path='/profile/:profile' element={<ProfilePage/>}>
                 <Route index element={<MyPosts/>}/>
                 <Route path='favorites' element={<FavoritesPost/>}/>
             </Route>

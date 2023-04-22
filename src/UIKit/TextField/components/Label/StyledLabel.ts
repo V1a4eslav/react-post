@@ -2,7 +2,8 @@ import styled, {css} from "styled-components";
 
 export const labelStyles = css`
   position: absolute;
-  top: 10%;
+  top: 0;
+  transform: translateY(-50%);
   left: 5px;
   font-size: 12px;
   color: #9b9b9b;

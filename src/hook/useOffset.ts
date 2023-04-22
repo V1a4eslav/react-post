@@ -1,6 +1,5 @@
 import {
-    Dispatch,
-    SetStateAction,
+    Dispatch, SetStateAction,
     useEffect, useMemo,
     useState
 } from "react";
@@ -28,5 +27,7 @@ export const useOffset = (): IReturnUseOffset => {
         setOffset(page * limit - limit);
     }, [page]);
 
-    return {offset, limit, page}
+    return {
+        offset, limit, page
+    }
 }

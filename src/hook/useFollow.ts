@@ -11,8 +11,7 @@ export const useFollow = (article: Author) => {
     const navigate = useNavigate();
     const isAuth = useAppSelector(state => state.user.isAuth);
 
-    const {username, following} = article;
-    const [isFollow, setIsFollow] = useState(following);
+    const [isFollow, setIsFollow] = useState(article.following);
 
     const [postFollow, {
         data: postFollowData,
@@ -30,31 +29,36 @@ export const useFollow = (article: Author) => {
         isError:isErrorDeleteFollow,
     }] = useDeleteFollowMutation();
 
-    const handleFollow = useCallback(async () => {
+    const updateFollowData =  (data: Author) => {
+        setIsFollow(data.following);
+    };
+
+    const handleFollow = async () => {
             if (isAuth) {
                 if (!isFollow) {
-                    await postFollow(username);
+                    await postFollow(article.username);
                 } else {
-                    await deleteFollow(username);
+                    await deleteFollow(article.username);
                 }
             } else {
                 navigate('/login');
             }
-        }, [isFollow,isAuth],
-    );
+        };
 
     useEffect(() => {
-        isSuccessPostFollow &&
-        postFollowData &&
-        setIsFollow(postFollowData.profile.following)
-    }, [isSuccessPostFollow, postFollowData]);
+        postFollowData && updateFollowData(postFollowData.profile)
+    }, [postFollowData?.profile.following]);
+
 
     useEffect(() => {
-        isSuccessDeleteFollow &&
-        deleteFollowData &&
-        setIsFollow(deleteFollowData.profile.following);
+        deleteFollowData && updateFollowData(deleteFollowData.profile)
+    }, [ deleteFollowData?.profile.following]);
 
-    }, [isSuccessDeleteFollow, deleteFollowData]);
+
+    useEffect(() => {
+        setIsFollow(article.following)
+    }, [article.following]);
+
 
     return {
         handleFollow,

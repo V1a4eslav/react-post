@@ -13,6 +13,7 @@ import storage from 'redux-persist/lib/storage';
 import {RealWorldApi} from "./realWorld/RealWorldApi";
 import {tagReducer} from "./realWorld/tagsSlice";
 import {userReducer} from "./realWorld/user/userSlice";
+import {globalFeedsReducer} from "./realWorld/feedsGlobalSlice";
 
 
 const persistConfig = {
@@ -32,6 +33,7 @@ const rootReducer = combineReducers({
     [RealWorldApi.reducerPath]:RealWorldApi.reducer,
     user:userReducer,
     tags:tagReducer,
+    // globalFeed:globalFeedsReducer,
 })
 
 

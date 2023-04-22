@@ -1,4 +1,4 @@
-import React, {FC, memo, useMemo} from 'react';
+import React, {FC, memo, useEffect, useMemo} from 'react';
 import {LoaderDots} from "../../../../../../UIKit/Loader/Loader";
 import {IFeedResponse} from "../../../../../../app/repository/realWorld/models/IFeedResponse";
 import {Pagination} from "../../Paginate/Pagination";
@@ -13,10 +13,10 @@ interface IFeedTemplate {
     isError: any,
     isLoading: boolean,
     isFetching: boolean,
-    pageCount: number|null
+    pageCount: number | null,
 }
 
-export const FeedsTemplate: FC<IFeedTemplate> = ({
+export const FeedsTemplate: FC<IFeedTemplate> = memo(({
                                                           pageCount,
                                                           data,
                                                           isSuccess,
@@ -27,12 +27,16 @@ export const FeedsTemplate: FC<IFeedTemplate> = ({
                                                           page,
                                                       }) => {
 
+    const memoizedPosts = useMemo(() => {
+        return data?.articles || [];
+    }, [data?.articles]);
+
     return (
         <>
             {isFetching && !isLoading && <LoaderDots/>}
             {isLoading && <LoaderDots/>}
             {isError && <p>Error</p>}
-            {isSuccess && <FeedList data={data}/>}
+            {isSuccess && <FeedList data={memoizedPosts}/>}
             {data?.articles.length && pageCount ?
                 (<Pagination
                     tag={tag}
@@ -42,4 +46,4 @@ export const FeedsTemplate: FC<IFeedTemplate> = ({
             }
         </>
     );
-};
+});

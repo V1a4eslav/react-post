@@ -18,11 +18,11 @@ export const FeedUser = memo(({article,colorUserText}: IFeedUser) => {
 
     return (
         <SFeedUser>
-            <SFeedUserLogo to={`/profiles/${article.author.username}`}>
+            <SFeedUserLogo to={`/profile/${encodeURIComponent(article.author.username)}`}>
                 <img src={article.author.image} alt="user_logo"/>
             </SFeedUserLogo>
             <SFeedUserInfo>
-                <SFeedUserName to={`/profile/${article.author.username}`}
+                <SFeedUserName to={`/profile/${encodeURIComponent(article.author.username)}`}
                                color={colorUserText}>
                     {article.author.username}
                 </SFeedUserName>

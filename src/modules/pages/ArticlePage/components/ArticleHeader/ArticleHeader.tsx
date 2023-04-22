@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo, useMemo} from 'react';
 import {Container} from 'src/UIKit/Container';
 import {SArticleHeader, SArticleHeaderTitle} from "./StyledComponent";
 import {IArticleResponse} from "../../../../../app/repository/realWorld/models/IArticleResponse";
@@ -13,8 +13,9 @@ export interface IArticleProps {
     isSuccess: boolean,
 }
 
-export const ArticleHeader = ({data, isFetching, isLoading, isSuccess}: IArticleProps) => {
-    const article = data?.article;
+export const ArticleHeader = memo(({data, isSuccess}: IArticleProps) => {
+
+    const article = useMemo(() => data.article, [data.article]);
 
     return (
         <>
@@ -27,4 +28,4 @@ export const ArticleHeader = ({data, isFetching, isLoading, isSuccess}: IArticle
                 </SArticleHeader>}
         </>
     );
-};
+});

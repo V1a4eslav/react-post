@@ -48,16 +48,13 @@ export const StyledInput = styled.input.attrs((props: IInputProps) => ({
 
   &:placeholder-shown ~ ${StyledLabel} {
     cursor: text;
-    top: 33px;
+    top: 50%;
+    transform: translateY(-50%);
     font-size: 16px;
   }
 
   &:focus ~ ${StyledLabel} {
     ${labelStyles};
-
-  }
-
-  &:focus ~ ${StyledLabel} {
     color: ${({theme, errors}) => errors ? theme.colors.errorColor : theme.colors.primary};
   }
 

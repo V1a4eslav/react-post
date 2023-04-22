@@ -1,4 +1,4 @@
-import React, {memo, useCallback, useEffect, useState} from 'react';
+import React, {memo, useCallback, useEffect, useMemo, useState} from 'react';
 import {Article} from "../../app/repository/realWorld/models/IFeedResponse";
 import {SUserButtonsBody, SUserButtonsWrapper} from "./StyledComponent";
 import {FeedUser} from "../FeedUser/FeedUser";
@@ -25,23 +25,21 @@ interface IUserButtonsBody {
 
 export const UserButtonsBody = memo((props: IUserButtonsBody) => {
     const isAuth = useAppSelector(state => state.user.isAuth);
-
     const {article, colorUserText} = props;
+    const item = useMemo(() => article, [article]);
     const navigate = useNavigate();
-    const {isOwnArticle} = useOwn(article.author.username);
-
+    const {isOwnArticle} = useOwn(item.author.username);
     const [deleteArticle, {
         isSuccess: isSuccessArticleDelete,
         isLoading: isLoadingArticleDelete,
         error: errorArticleDelete,
     }] = useDeleteArticleMutation();
 
-    const handleDeleteArticle = (async () => {
+    const handleDeleteArticle = async () => {
             !isAuth ?
                 navigate('/login') :
-                await deleteArticle(article.slug);
-        }
-    );
+                await deleteArticle(item.slug);
+        };
 
     const {
         handleFavArticle,
@@ -49,14 +47,14 @@ export const UserButtonsBody = memo((props: IUserButtonsBody) => {
         favCount,
         isLoadingArticleFav,
         isLoadingArticleDel
-    } = useFavorite(article);
+    } = useFavorite(item);
 
     const {
         handleFollow,
         isFollow,
         isLoadingPostFollow,
         isLoadingDeleteFollow
-    } = useFollow(article.author);
+    } = useFollow(item.author);
 
 
     useEffect(() => {
@@ -65,11 +63,11 @@ export const UserButtonsBody = memo((props: IUserButtonsBody) => {
 
     return (
         <SUserButtonsBody>
-            <FeedUser article={article}
+            <FeedUser article={item}
                       colorUserText={colorUserText}/>
             {isOwnArticle &&
                 <SUserButtonsWrapper>
-                    <SArticleUserEditButton to={`/editor/${article.slug}`}>
+                    <SArticleUserEditButton to={`/editor/${item.slug}`}>
                         <BsPencilFill/>
                         <span> Edit Article</span>
                     </SArticleUserEditButton>
@@ -86,7 +84,7 @@ export const UserButtonsBody = memo((props: IUserButtonsBody) => {
                                               disabled={!!(isLoadingDeleteFollow || isLoadingPostFollow)}>
                         <BiPlusMedical/>
                         <span>
-                            {!isFollow ? 'Follow' : 'Unfollow'} {article.author.username}</span>
+                            {!isFollow ? 'Follow' : 'Unfollow'} {item.author.username}</span>
                     </SArticleUserFollowButton>
                     <SArticleUserFavButton className={isFavorite ? 'active' : ''}
                                            onClick={handleFavArticle}>

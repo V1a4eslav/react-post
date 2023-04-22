@@ -1,9 +1,10 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useMemo} from 'react';
 import {
     useGetGlobalFeedsQuery,
 } from "../../../../../../app/repository/realWorld/RealWorldApi";
 import {useOffset} from "../../../../../../hook/useOffset";
 import {FeedsTemplate} from "./FeedTemplate";
+
 
 export const GlobalFeed = () => {
     const {offset, limit, page} = useOffset();
@@ -34,7 +35,8 @@ export const GlobalFeed = () => {
                 isSuccess={isSuccess}
                 isError={isError}
                 isLoading={isLoading}
-                isFetching={isFetching}/>
+                isFetching={isFetching}
+            />
         </>
     );
 };

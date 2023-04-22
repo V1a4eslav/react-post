@@ -1,9 +1,9 @@
-import React, {FC, memo, useMemo, useState} from 'react';
+import React, {FC, memo, useCallback, useEffect, useMemo, useState} from 'react';
 import {
     SFeedBody, SFeedFooter, SFeedFooterButton, SFeedFooterTags,
     SFeedHeader, SFeedLikeContainer,
     SFeedPreview, SFeedText, SFeedTitle,
- SIconAiOutlineHeart, SLikeCount
+    SIconAiOutlineHeart, SLikeCount
 } from './StyledComponent';
 import {Article} from "../../../../../../app/repository/realWorld/models/IFeedResponse";
 import {FeedUser} from "../../../../../../UIKit/FeedUser/FeedUser";
@@ -11,22 +11,22 @@ import {useFavorite} from "../../../../../../hook/useFavorite";
 import {FeedTags} from "./FeedTags";
 
 
-export const Feed:FC<{article:Article}> = memo(({article}) => {
+export const Feed: FC<{ article: Article }> = memo(({article}) => {
+
+    const item = useMemo(() => article, [article]);
 
     const {
         handleFavArticle,
-        isSuccessArticleFav,
-        isSuccessArticleDel,
         isLoadingArticleFav,
         isLoadingArticleDel,
         isFavorite,
         favCount,
-    } = useFavorite(article);
+    } = useFavorite(item);
 
     return (
         <SFeedPreview>
             <SFeedHeader>
-                <FeedUser article={article}/>
+                <FeedUser article={item}/>
                 <SFeedLikeContainer className={isFavorite ? 'active' : ''}
                                     onClick={handleFavArticle}>
                     <SIconAiOutlineHeart/>
@@ -35,13 +35,13 @@ export const Feed:FC<{article:Article}> = memo(({article}) => {
                 </SFeedLikeContainer>
             </SFeedHeader>
             <SFeedBody>
-                <SFeedTitle>{article.title}</SFeedTitle>
-                <SFeedText>{article.description}</SFeedText>
+                <SFeedTitle>{item.title}</SFeedTitle>
+                <SFeedText>{item.description}</SFeedText>
             </SFeedBody>
             <SFeedFooter>
-                <SFeedFooterButton to={'/article/' + article.slug}>Read more...</SFeedFooterButton>
+                <SFeedFooterButton to={'/article/' + item.slug}>Read more...</SFeedFooterButton>
                 <SFeedFooterTags>
-                    <FeedTags article={article.tagList}/>
+                    <FeedTags article={item.tagList}/>
                 </SFeedFooterTags>
             </SFeedFooter>
         </SFeedPreview>

@@ -10,6 +10,8 @@ export const HeaderNav = ({className}: IHeaderNav) => {
     const isAuth = useAppSelector(state => state.user.isAuth);
     const profile = useAppSelector(state => state.user.userData.username)
 
+    // const userName = encodeURIComponent(profile);
+
     return (
         <HeaderNavStyle className={className}>
             <HeaderLink to='/main'>Home</HeaderLink>
@@ -27,7 +29,7 @@ export const HeaderNav = ({className}: IHeaderNav) => {
                     <HeaderLink to={'/settings'}>
                         <RiSettings5Fill/>Settings
                     </HeaderLink>
-                    <HeaderLink to={`/profile/${profile}`}>
+                    <HeaderLink to={`/profile/${encodeURIComponent(profile)}`}>
                         <ButtonHeaderUser/>
                     </HeaderLink>
                 </>

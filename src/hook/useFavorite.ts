@@ -13,16 +13,12 @@ export const useFavorite = (article: Article) => {
         data: postFavoriteData,
         isSuccess: isSuccessArticleFav,
         isLoading: isLoadingArticleFav,
-        error: errorArticleFav,
-        isError: isErrorArticleFav,
     }] = usePostFavoriteMutation();
 
     const [deleteFavorite, {
         data: deleteFavoriteData,
         isSuccess: isSuccessArticleDel,
         isLoading: isLoadingArticleDel,
-        error: errorArticleDel,
-        isError: isErrorArticleDel,
     }] = useDeleteFavoriteMutation();
 
         const updateFavoriteData =  (data: Article) => {
