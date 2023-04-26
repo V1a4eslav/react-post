@@ -24,7 +24,7 @@ export const HeaderNav = () => {
             <Burger setMenuActive={setMenuActive} menuActive={menuActive}/>
             <HeaderNavigate menuActive={menuActive}>
                 <HeaderLink to='/main'>Home</HeaderLink>
-                <HeaderNavLinks/>
+                {isAuth && <HeaderNavLinks/>}
                 {!isAuth &&
                     <>
                         <HeaderLink to='/login'>Sign In</HeaderLink>

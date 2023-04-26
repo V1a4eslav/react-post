@@ -28,7 +28,8 @@ export const Feed: FC<{ article: Article }> = memo(({article}) => {
             <SFeedHeader>
                 <FeedUser article={item}/>
                 <SFeedLikeContainer className={isFavorite ? 'active' : ''}
-                                    onClick={handleFavArticle}>
+                                    onClick={handleFavArticle}
+                >
                     <SIconAiOutlineHeart/>
                     <SLikeCount>{isLoadingArticleFav || isLoadingArticleDel
                         ? '..' : favCount}</SLikeCount>
