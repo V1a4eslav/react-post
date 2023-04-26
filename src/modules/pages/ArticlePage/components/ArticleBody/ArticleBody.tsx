@@ -1,5 +1,5 @@
 import React from 'react';
-import {Container} from 'src/UIKit/Container';
+import {Container} from 'src/modules/UIKit/Container';
 import {
     SArticleBodyTagItems,
     SArticleBodyText,
@@ -8,7 +8,7 @@ import {
     SArticleUserButtonsBody
 } from "./SryledComponent";
 import {IArticleProps} from "../ArticleHeader/ArticleHeader";
-import {UserButtonsBody} from "../../../../../UIKit/UserButtonsBody/UserButtonsBody";
+import {UserButtonsBody} from "../../../../UIKit/UserButtonsBody/UserButtonsBody";
 
 export const ArticleBody = ({data, isFetching, isLoading, isSuccess}: IArticleProps) => {
     const {body, tagList} = data.article;

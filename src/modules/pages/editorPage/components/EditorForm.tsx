@@ -7,7 +7,7 @@ import {
     SArticleTagsField,
     SArticleTitleField
 } from './StyledComponents';
-import {TextareaField} from "../../../../UIKit/TextareaField/TextareaField";
+import {TextareaField} from "../../../UIKit/TextareaField/TextareaField";
 import {useNewArticleMutation} from "../../../../app/repository/realWorld/RealWorldApi";
 import {useNavigate} from "react-router";
 

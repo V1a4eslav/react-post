@@ -43,23 +43,7 @@ export const RealWorldApi = createApi({
     ],
 
     endpoints: build => ({
-        getArticleComment: build.query<ICommentResponse, string>({
-            query: (query) => ({
-                url: `articles/${query}/comments`,
-            }),
-            providesTags: (result) =>
-                result ?
-                    [...result.comments.map(({id}) => ({type: 'COMMENTS' as const, id})),
-                        {type: 'COMMENTS', id: 'COMMENTS'},
-                    ] : [{type: 'COMMENTS', id: 'COMMENTS'}]
-        }),
-        deleteArticle: build.mutation<void, string>({
-            query: (query) => ({
-                url: `articles/${query}`,
-                method: 'DELETE'
-            }),
-            invalidatesTags: ['GLOBAL', 'MY_POST']
-        }),
+        /*GET Articles Arrays*/
         getYourFeeds: build.query<IFeedResponse, void | string>({
             query: (query = '') => ({
                 url: `articles/feed${query}`,
@@ -90,6 +74,27 @@ export const RealWorldApi = createApi({
                         {type: 'GLOBAL', id: 'GLOBAL'},
                     ] : [{type: 'GLOBAL', id: 'GLOBAL'}],
         }),
+        getFavoritePosts: build.query<IFeedResponse, void | string>({
+            query: (query = '') => ({
+                url: `articles?favorited=${query}`,
+            }),
+            providesTags: (result) =>
+                result ?
+                    [...result.articles.map(({slug}) => ({type: 'FAVORITE' as const, id: slug})),
+                        {type: 'FAVORITE', id: 'FAVORITE'},
+                    ] : [{type: 'FAVORITE', id: 'FAVORITE'}],
+        }),
+        getMyPosts: build.query<IFeedResponse, void | string>({
+            query: (query = '') => ({
+                url: `articles?author=${query}`,
+            }),
+            providesTags: (result) =>
+                result ?
+                    [...result.articles.map(({slug}) => ({type: 'MY_POST' as const, id: slug})),
+                        {type: 'MY_POST', id: 'MY_POST'},
+                    ] : [{type: 'MY_POST', id: 'MY_POST'}],
+        }),
+        /*Favorite*/
         postFavorite: build.mutation<IArticleFavoritedResponse, string>({
             query: (slug) => ({
                 url: `articles/${slug}/favorite`,
@@ -104,76 +109,7 @@ export const RealWorldApi = createApi({
             }),
             invalidatesTags: ['TAG_FEEDS', 'FAVORITE', 'YOUR_FEED', 'GLOBAL', 'MY_POST', 'ARTICLE'],
         }),
-        getFavoritePosts: build.query<IFeedResponse, void | string>({
-            query: (query = '') => ({
-                url: `articles?favorited=${query}`,
-            }),
-            providesTags: (result) =>
-                result ?
-                    [...result.articles.map(({slug}) => ({type: 'FAVORITE' as const, id: slug})),
-                        {type: 'FAVORITE', id: 'FAVORITE'},
-                    ] : [{type: 'FAVORITE', id: 'FAVORITE'}],
-        }),
-        getArticle: build.query<IArticleResponse, string>({
-            query: (query) => ({
-                url: `articles/${query}`,
-            }),
-            providesTags: (result) => [{type: 'ARTICLE', id: result?.article.slug}]
-        }),
-        getMyPosts: build.query<IFeedResponse, void | string>({
-            query: (query = '') => ({
-                url: `articles?author=${query}`,
-            }),
-            providesTags: (result) =>
-                result ?
-                    [...result.articles.map(({slug}) => ({type: 'MY_POST' as const, id: slug})),
-                        {type: 'MY_POST', id: 'MY_POST'},
-                    ] : [{type: 'MY_POST', id: 'MY_POST'}],
-        }),
-        signUp: build.mutation<IAuthResponse, IAuthDataResponse>({
-            query: (data: IAuthRequest) => ({
-                url: `users`,
-                method: 'POST',
-                body: JSON.stringify({user: data, returnSecureToken: true}),
-            }),
-        }),
-        signIn: build.mutation<IAuthResponse, IAuthRequest>({
-            query: (data: IAuthRequest) => ({
-                url: `users/login`,
-                method: 'POST',
-                body: JSON.stringify({user: data, returnSecureToken: true}),
-            }),
-        }),
-        updateSettings: build.mutation<IAuthResponse, IUpdateSettingsRequest>({
-            query: (data) => ({
-                url: 'user',
-                method: 'PUT',
-                body: {user: data},
-            })
-        }),
-        newArticle: build.mutation<IArticleResponse, IArticleRequest>({
-            query: body => ({
-                url: `articles/`,
-                method: 'POST',
-                body: {article: body}
-            }),
-            invalidatesTags: ['GLOBAL', 'MY_POST']
-        }),
-        updateArticle: build.mutation<IArticleResponse, IUpdateArticlesRequest>({
-            query: ({query, body}) => ({
-                url: `articles/${query}`,
-                method: 'PUT',
-                body: {article: body}
-            })
-        }),
-        postComment: build.mutation<IPostCommentResponse, IPostCommentRequest>({
-            query: ({query, comment}) => ({
-                url: `articles/${query}/comments`,
-                method: 'POST',
-                body: {comment}
-            }),
-            invalidatesTags:['COMMENTS']
-        }),
+        /*Follow*/
         postFollow: build.mutation<IProfileResponse, string>({
             query: (query) => ({
                 url: `profiles/${query}/follow`,
@@ -190,12 +126,83 @@ export const RealWorldApi = createApi({
             invalidatesTags: ['ARTICLE',
                 {type: 'YOUR_FEED', id: 'YOUR_FEED'}]
         }),
+        /*Auth*/
+        signUp: build.mutation<IAuthResponse, IAuthDataResponse>({
+            query: (data: IAuthRequest) => ({
+                url: `users`,
+                method: 'POST',
+                body: JSON.stringify({user: data, returnSecureToken: true}),
+            }),
+        }),
+        signIn: build.mutation<IAuthResponse, IAuthRequest>({
+            query: (data: IAuthRequest) => ({
+                url: `users/login`,
+                method: 'POST',
+                body: JSON.stringify({user: data, returnSecureToken: true}),
+            }),
+        }),
+        /*Fetch with Article*/
+        deleteArticle: build.mutation<void, string>({
+            query: (query) => ({
+                url: `articles/${query}`,
+                method: 'DELETE'
+            }),
+            invalidatesTags: ['GLOBAL', 'MY_POST']
+        }),
+        getArticle: build.query<IArticleResponse, string>({
+            query: (query) => ({
+                url: `articles/${query}`,
+            }),
+            providesTags: (result) => [{type: 'ARTICLE', id: result?.article.slug}]
+        }),
+        newArticle: build.mutation<IArticleResponse, IArticleRequest>({
+            query: body => ({
+                url: `articles/`,
+                method: 'POST',
+                body: {article: body}
+            }),
+            invalidatesTags: ['GLOBAL', 'MY_POST']
+        }),
+        updateArticle: build.mutation<IArticleResponse, IUpdateArticlesRequest>({
+            query: ({query, body}) => ({
+                url: `articles/${query}`,
+                method: 'PUT',
+                body: {article: body}
+            })
+        }),
+        /*Comments*/
+        getArticleComment: build.query<ICommentResponse, string>({
+            query: (query) => ({
+                url: `articles/${query}/comments`,
+            }),
+            providesTags: (result) =>
+                result ?
+                    [...result.comments.map(({id}) => ({type: 'COMMENTS' as const, id})),
+                        {type: 'COMMENTS', id: 'COMMENTS'},
+                    ] : [{type: 'COMMENTS', id: 'COMMENTS'}]
+        }),
+        postComment: build.mutation<IPostCommentResponse, IPostCommentRequest>({
+            query: ({query, comment}) => ({
+                url: `articles/${query}/comments`,
+                method: 'POST',
+                body: {comment}
+            }),
+            invalidatesTags: ['COMMENTS']
+        }),
         deleteArticleComment: build.mutation<any, any>({
             query: ({slug, id}) => ({
                 url: `articles/${slug}/comments/${id}`,
                 method: 'DELETE'
             }),
             invalidatesTags: ['COMMENTS']
+        }),
+        /*Others*/
+        updateSettings: build.mutation<IAuthResponse, IUpdateSettingsRequest>({
+            query: (data) => ({
+                url: 'user',
+                method: 'PUT',
+                body: {user: data},
+            })
         }),
         getProfile: build.query<IProfileResponse, string>({
             query: (query) => ({

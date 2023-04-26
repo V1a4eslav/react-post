@@ -1,4 +1,4 @@
-import {useCallback, useEffect, useState} from "react";
+import { useEffect, useState} from "react";
 import {Article} from "../app/repository/realWorld/models/IFeedResponse";
 import {useDeleteFavoriteMutation, usePostFavoriteMutation} from "../app/repository/realWorld/RealWorldApi";
 import {useAppSelector} from "./redux";
@@ -9,6 +9,7 @@ export const useFavorite = (article: Article) => {
     const navigate = useNavigate();
     const [isFavorite, setIsFavorite] = useState<boolean>(article.favorited);
     const [favCount, setFavCount] = useState<number>(article.favoritesCount);
+
     const [postFavorite, {
         data: postFavoriteData,
         isSuccess: isSuccessArticleFav,

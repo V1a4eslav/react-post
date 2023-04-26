@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect} from 'react';
 import {SubmitHandler, useForm} from "react-hook-form";
-import {Title} from 'src/UIKit/Title/Title';
+import {Title} from 'src/modules/UIKit/Title/Title';
 import {useAppSelector} from "../../../hook/redux";
 import {
     SSettingsContainer,
@@ -13,7 +13,7 @@ import {
 import {useNavigate} from "react-router";
 import {useUpdateSettingsMutation} from "../../../app/repository/realWorld/RealWorldApi";
 import {useActions} from "../../../hook/actions";
-import {StyledErrorMessage} from "../../../UIKit/TextField/components/StyledErrorMessage";
+import {StyledErrorMessage} from "../../UIKit/ErrorMessage/StyledErrorMessage";
 
 interface SettingsRequest{
     email: string

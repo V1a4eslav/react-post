@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import {ITheme} from "../../../../../app/theme/themeInterface";
-import {Title} from "../../../../../UIKit/Title/Title";
+import {Title} from "../../../../UIKit/Title/Title";
 
 export const SArticleHeader = styled.div`
   background-color: ${({theme}: ITheme) => theme.colors.secondary};

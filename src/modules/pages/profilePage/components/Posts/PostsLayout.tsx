@@ -1,7 +1,7 @@
 import React, {memo, useEffect, useMemo, useRef, useState} from 'react';
-import {StyledFeedsContent, StyledFeedsNav} from 'src/modules/components/Feeds/components/FeedsItems/StyledComponent';
-import {Container} from 'src/UIKit/Container';
-import {FeedsLink} from "../../../../components/Feeds/components/FeedsItems/FeedsLink";
+import {StyledFeedsContent, StyledFeedsNav} from 'src/modules/pages/homePage/components/FeedsItems/StyledComponent';
+import {Container} from 'src/modules/UIKit/Container';
+import {FeedsLink} from "../../../homePage/components/FeedsItems/components/FeedsLink";
 import {Outlet} from "react-router";
 import {IProfileResponse} from "../../../../../app/repository/realWorld/models/IProfileResponse";
 

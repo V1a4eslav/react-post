@@ -8,7 +8,7 @@ import {
     SArticleTagsField,
     SArticleTitleField
 } from "./StyledComponents";
-import {TextareaField} from "../../../../UIKit/TextareaField/TextareaField";
+import {TextareaField} from "../../../UIKit/TextareaField/TextareaField";
 import {useNavigate} from "react-router";
 
 interface IArticle {

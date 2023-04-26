@@ -3,7 +3,7 @@ import {useOffset} from "../../../../../../hook/useOffset";
 import {
     useGetFavoritePostsQuery,
 } from "../../../../../../app/repository/realWorld/RealWorldApi";
-import {FeedsTemplate} from "../../../../../components/Feeds/components/FeedsItems/components/FeedTemplate";
+import {FeedsTemplate} from "../../../../homePage/components/FeedsItems/components/FeedTemplate";
 import {useLocation} from "react-router";
 
 export const FavoritesPost = () => {

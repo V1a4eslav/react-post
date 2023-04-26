@@ -7,13 +7,12 @@ import {
     PAUSE,
     PERSIST,
     PURGE,
-    REGISTER, createTransform,
+    REGISTER,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import {RealWorldApi} from "./realWorld/RealWorldApi";
 import {tagReducer} from "./realWorld/tagsSlice";
 import {userReducer} from "./realWorld/user/userSlice";
-import {globalFeedsReducer} from "./realWorld/feedsGlobalSlice";
 
 
 const persistConfig = {
@@ -21,20 +20,13 @@ const persistConfig = {
     storage,
     blacklist: ['RealWorld'],
     whitelist: ['user','tags'],
-    // transforms: [
-    //     createTransform(
-    //         (state: string[]) => state, //функция сериализации
-    //         (state: any) => ({...state, realWorld: state.realWorld || []}), //функция десериализации
-    //     ),
-    // ],
-}
+};
 
 const rootReducer = combineReducers({
     [RealWorldApi.reducerPath]:RealWorldApi.reducer,
     user:userReducer,
     tags:tagReducer,
-    // globalFeed:globalFeedsReducer,
-})
+});
 
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -47,8 +39,8 @@ export const store = configureStore({
                 ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
             },
         }).concat(RealWorldApi.middleware),
-})
+});
 
 export const persistor = persistStore(store);
 
-export type RootState = ReturnType<typeof store.getState>
+export type RootState = ReturnType<typeof store.getState>;

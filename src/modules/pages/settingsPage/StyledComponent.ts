@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import {TextField} from "../../../UIKit/TextField/TextField";
-import {TextareaField} from "../../../UIKit/TextareaField/TextareaField";
-import {PasswordTextField} from "../../../UIKit/PasswordTextField/PasswordTextField";
-import {Button} from "../../../UIKit/Button/Button";
+import {TextField} from "../../UIKit/TextField/TextField";
+import {TextareaField} from "../../UIKit/TextareaField/TextareaField";
+import {PasswordTextField} from "../../UIKit/PasswordTextField/PasswordTextField";
+import {Button} from "../../UIKit/Button/Button";
 
 export const SSettingsContainer = styled.div`
   max-width: 80%;

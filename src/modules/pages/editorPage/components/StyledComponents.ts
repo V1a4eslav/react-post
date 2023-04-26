@@ -1,10 +1,11 @@
 import styled from "styled-components";
-import {TextField} from "../../../../UIKit/TextField/TextField";
-import {Button} from "../../../../UIKit/Button/Button";
+import {TextField} from "../../../UIKit/TextField/TextField";
+import {Button} from "../../../UIKit/Button/Button";
 
 export const SArticleForm = styled.form`
+  
   max-width: 80%;
-  margin: 0 auto;
+  margin: 30px auto 30px;
 `
 export const SArticleTitleField = styled(TextField)`
   padding: 12px;

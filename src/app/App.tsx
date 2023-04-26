@@ -2,7 +2,7 @@ import React from 'react';
 import {router} from './routing/router';
 import {RouterProvider} from "react-router";
 import '../fonts/Fonts.css';
-import {GlobalStyles} from "../modules/components/GlobalStyles";
+import {GlobalStyles} from "../modules/UIKit/GlobalStyles";
 import {ThemeProvider} from "styled-components";
 import {useTheme} from "../hook/useTheme";
 

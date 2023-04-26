@@ -7,7 +7,7 @@ import {
     SCommentWrapper
 } from "./StyledComponent";
 import {Comment} from "../../../../../app/repository/realWorld/models/ICommentResponse";
-import {CommentUser} from "../../../../../UIKit/CommentUser/CommentUser";
+import {CommentUser} from "../../../../UIKit/CommentUser/CommentUser";
 import {useOwn} from "../../../../../hook/useOwn";
 import {useParams} from "react-router-dom";
 import {useDeleteArticleCommentMutation} from "../../../../../app/repository/realWorld/RealWorldApi";

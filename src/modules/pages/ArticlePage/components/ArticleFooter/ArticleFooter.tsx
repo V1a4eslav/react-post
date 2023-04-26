@@ -1,12 +1,12 @@
 import React, {useCallback, useEffect} from 'react';
-import {Container} from 'src/UIKit/Container';
+import {Container} from 'src/modules/UIKit/Container';
 import {
     SArticleCommentFooter, SArticleCommentForm,
     SArticleUserCommentsBlock
 } from "./StyledComponent";
-import {SFeedUserLogo} from "../../../../components/Feeds/components/FeedsItems/components/StyledComponent";
+import {SFeedUserLogo} from "../../../homePage/components/FeedsItems/components/StyledComponent";
 import {IArticleProps} from "../ArticleHeader/ArticleHeader";
-import {SArticleFormButton} from "../../../../../UIKit/Button/Button";
+import {SArticleFormButton} from "../../../../UIKit/Button/Button";
 import {ArticleCommentsBody} from "./ArticleCommentsBody";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {usePostCommentMutation} from "../../../../../app/repository/realWorld/RealWorldApi";

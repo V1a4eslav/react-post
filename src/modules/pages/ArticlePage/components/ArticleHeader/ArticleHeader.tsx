@@ -1,10 +1,10 @@
 import React, {memo, useMemo} from 'react';
-import {Container} from 'src/UIKit/Container';
+import {Container} from 'src/modules/UIKit/Container';
 import {SArticleHeader, SArticleHeaderTitle} from "./StyledComponent";
 import {IArticleResponse} from "../../../../../app/repository/realWorld/models/IArticleResponse";
-import {FeedUser} from "../../../../../UIKit/FeedUser/FeedUser";
+import {FeedUser} from "../../../../UIKit/FeedUser/FeedUser";
 import {useAppSelector} from "../../../../../hook/redux";
-import {UserButtonsBody} from "../../../../../UIKit/UserButtonsBody/UserButtonsBody";
+import {UserButtonsBody} from "../../../../UIKit/UserButtonsBody/UserButtonsBody";
 
 export interface IArticleProps {
     data: IArticleResponse,

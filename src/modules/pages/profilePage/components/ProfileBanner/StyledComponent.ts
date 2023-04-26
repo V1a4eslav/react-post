@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import {SArticleUserEditButton} from "../../../../../UIKit/ArticleUserButton/StyledComponent";
+import {SArticleUserEditButton} from "../../../../UIKit/ArticleUserButton/StyledComponent";
 
 export const SProfileBannerWrapper = styled.div`
   padding-top: 32px;

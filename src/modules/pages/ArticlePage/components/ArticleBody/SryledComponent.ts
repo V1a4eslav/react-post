@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import {ITheme} from "../../../../../app/theme/themeInterface";
-import {StyledTagItems} from "../../../../components/Feeds/components/FeedsTags/StyledFeedsTags";
-import {TagItem} from "../../../../components/Feeds/components/FeedsTags/TagItem";
+import {StyledTagItems} from "../../../homePage/components/FeedsTags/StyledFeedsTags";
+import {TagItem} from "../../../homePage/components/FeedsTags/TagItem";
 
 export const SArticleInnerBody = styled.div`
   border-bottom: 1px solid #ccc;
