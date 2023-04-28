@@ -31,7 +31,7 @@ const DotTransition: Transition = {
     ease: "easeInOut"
 };
 
-export const LoaderDots = ()=> {
+export const LoaderDots = () => {
     return (
         <LoadingWrapper>
             <LoadingContainer

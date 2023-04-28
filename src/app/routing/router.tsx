@@ -54,4 +54,4 @@ export const router = createBrowserRouter(createRoutesFromElements(
             <Route path='register' element={<RegisterPage/>}/>
         </Route>
     </>
-))
+));

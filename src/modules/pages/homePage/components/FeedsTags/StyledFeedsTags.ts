@@ -20,7 +20,7 @@ export const StyledFeedsTagContent = styled(motion.div)`
   background-color: #f3f3f3;
   border-radius: 5%;
   overflow: hidden;
-  min-height: 100px;
+  min-height: 150px;
 `
 export const StyledTagItems = styled.div`
   display: flex;

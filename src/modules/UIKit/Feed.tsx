@@ -1,4 +1,4 @@
-import React, {FC, memo, useCallback, useEffect, useMemo, useState} from 'react';
+import React, {FC, memo, useMemo, Suspense} from 'react';
 import {
     SFeedBody, SFeedFooter, SFeedFooterButton, SFeedFooterTags,
     SFeedHeader, SFeedLikeContainer,

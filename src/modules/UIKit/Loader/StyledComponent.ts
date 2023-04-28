@@ -4,8 +4,10 @@ import {ITheme} from "../../../app/theme/themeInterface";
 
 export const LoadingWrapper = styled.div`
   position: absolute;
-  top: 50%;
-  width: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -20,8 +22,10 @@ export const LoadingDot = styled(motion.span)`
 `;
 
 export const LoadingContainer = styled(motion.div)`
+  position: fixed;
+  top: 50%;
   width: 85px;
-  height: auto;
+  height: 100%;
   display: flex;
   justify-content: space-around;
 `;

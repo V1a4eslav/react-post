@@ -2,7 +2,12 @@ import React, {memo} from "react";
 import {Article} from "../../../../../../app/repository/realWorld/models/IFeedResponse";
 import {Feed} from "../../../../../UIKit/Feed";
 
-export const FeedList = memo(({data}: { data: Article[] | undefined }) => {
+
+interface IFeedList{
+    data:Article[] | undefined,
+}
+
+export const FeedList = memo(({data}:IFeedList) => {
     return (
         <>
             {data?.map((article, index) => (
