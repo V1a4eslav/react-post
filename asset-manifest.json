@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/react-post/static/css/main.55c7dd58.css",
-    "main.js": "/react-post/static/js/main.2f0ec2ae.js",
+    "main.js": "/react-post/static/js/main.06d730b8.js",
     "static/media/TitilliumWeb-Light.woff2": "/react-post/static/media/TitilliumWeb-Light.6766e3dd93149612de55.woff2",
     "static/media/TitilliumWeb-Regular.woff2": "/react-post/static/media/TitilliumWeb-Regular.78d15089db9ca1ff58a4.woff2",
     "static/media/TitilliumWeb-SemiBold.woff2": "/react-post/static/media/TitilliumWeb-SemiBold.ffa10bdb2a52a76896d0.woff2",
     "static/media/TitilliumWeb-Bold.woff2": "/react-post/static/media/TitilliumWeb-Bold.f3583b07702485721baa.woff2",
     "index.html": "/react-post/index.html",
     "main.55c7dd58.css.map": "/react-post/static/css/main.55c7dd58.css.map",
-    "main.2f0ec2ae.js.map": "/react-post/static/js/main.2f0ec2ae.js.map"
+    "main.06d730b8.js.map": "/react-post/static/js/main.06d730b8.js.map"
   },
   "entrypoints": [
     "static/css/main.55c7dd58.css",
-    "static/js/main.2f0ec2ae.js"
+    "static/js/main.06d730b8.js"
   ]
 }
